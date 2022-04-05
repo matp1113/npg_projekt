@@ -262,9 +262,8 @@ if __name__ == '__main__':
         i = i + 1
 
     draw(bot)
-    print("jak działa git")
 
-    print("hgw")
+
 
 
 
