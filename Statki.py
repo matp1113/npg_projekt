@@ -243,14 +243,14 @@ def welcome(pack):
 if __name__ == '__main__':
     ship = [4, 3, 2, 1]
     size = 10 #rozmiar
-    pack = [ship, size]
+    pack = [ship, size] #zrobione jak wskaznik by settings miało dostęp
 
     tab = welcome(pack)
     draw(tab)
 
-    bot = rand(pack[1], pack[0])
+    bot = rand(pack[1], pack[0]) #plansza dla bota w którą strzelamy
     while bot == 0:
-        bot = rand(pack[1], pack[0])
+        bot = rand(pack[1], pack[0]) #algorytm który szuka możliwej kombinacji jak jest zbyt trudna lub niemożliwa to rip
 
     player_view(bot)
 
@@ -262,6 +262,7 @@ if __name__ == '__main__':
         i = i + 1
 
     draw(bot)
+    print("jak działa git")
 
 
 
