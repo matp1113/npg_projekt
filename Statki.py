@@ -150,7 +150,7 @@ def wreck(x, y, tab, h):
 #sprawdza czy statk jest zatopiony
 
 def shoot(tab):
-    x = int(input("podaj x")) #wpisywanie liter zamiast liczb
+    x = int(input("podaj x")) #todo wpisywanie liter zamiast liczb
     y = int(input("podaj Y"))
 
     if tab[y][x] == '■':
@@ -234,7 +234,7 @@ def welcome(pack):
     elif num == 1:
         tab = rand(pack[1], pack[0])
         while tab == 0:
-            tab = rand(pack[1], pack[0]) #jak zadasz zbyt trudne ustawienia musi konczyć program w wszystkich takich pętlach z rand (może kolejna funkcja pośrednia)
+            tab = rand(pack[1], pack[0]) #todo jak zadasz zbyt trudne ustawienia musi konczyć program w wszystkich takich pętlach z rand (może kolejna funkcja pośrednia)
 
     elif num == 2:
         tab = player_board(pack[1], pack[0])
@@ -256,14 +256,14 @@ if __name__ == '__main__':
     player_view(bot)
 
     i = 0                #10 krotne wywołanie strzału dla testów
-    while i != 10: #strzały od bota
+    while i != 10: #todo strzały od bota
         shoot(bot)
         clearConsole()
         player_view(bot)
         i = i + 1
 
     draw(bot)
-    #wygrana
+    #todo wygrana
 
 
 
