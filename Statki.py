@@ -147,7 +147,7 @@ def wreck(x, y, tab, h):
     tab[h[1]][h[0]] = ini #przywraca wartość orginalną
 
     return a #funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
-#sprawdza czy statk jest zatopiony
+#sprawdza czy statek jest zatopiony
 
 def shoot(tab):
     x = int(input("podaj x")) #todo wpisywanie liter zamiast liczb
