@@ -128,7 +128,7 @@ def wreck(x, y, tab, h):
         return (1)
 
     ini = tab[h[1]][h[0]]
-    tab[h[1]][h[0]] = 'wreck podmiana' #zmienia wartośćaby schodząc w dół sie nie zapętlał
+    tab[h[1]][h[0]] = 'wreck podmiana' #zmienia wartośćaby schodząc w dół aby sie nie zapętlał
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
             if tab[j][i] == '⛝':
