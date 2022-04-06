@@ -22,19 +22,21 @@ def twist(x, y, l, n):
     if len(tab) == 0:
         return (0)
 
-    return (random.choice(tab))
-#ustawianie dłuższych statków w konkretnym kierunku
+    return (random.choice(tab)) #losowa strona wylosowana z tabeli
+#sprawdza czy możliwe jest obrócenie statku o długości l i zwraca tablie z możliwymi obrotami
+
 
 def check(x, y, tab, h = [0, 0]):
     ini = tab[h[1]][h[0]]
-    tab[h[1]][h[0]] = '0'
+    tab[h[1]][h[0]] = 'check podmiana'
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
             if tab[j][i] == '■':
+                tab[h[1]][h[0]] = ini
                 return 0
     tab[h[1]][h[0]] = ini
     return 1
-#sprawdzanie czy dokoła (x, y) jest pole z statkiem
+#sprawdzanie czy dokoła pola (x, y) jest pole z statkiem + może pominąć jedną kratkę h (potrzebne do funkcji rand)
 
 def rand(n, ship):#n wymiar planszy, ship liczba statków o konkretnym wymiarze
     tab = create(n+2)
@@ -53,7 +55,7 @@ def rand(n, ship):#n wymiar planszy, ship liczba statków o konkretnym wymiarze
             if tiles == 0:
                 return (0)
 
-            if (dir[0] > 0):
+            if (dir[0] > 0): #sprawdzenie w którą stronę wylosowało
                 for a in range(1, j):
                     tiles = check(x + a, y, tab, [x + a - 1, y])
                     if tiles == 0:
@@ -120,25 +122,21 @@ def sunk(x, y, tab):
 #zatapia (obrysowuje) daną kratkę
 
 def wreck(x, y, tab, h):
-    ini = tab[h[1]][h[0]]
-    tab[h[1]][h[0]] = '0'
-    a = 0
-    if check(x, y, tab) != 1:
-        tab[h[1]][h[0]] = ini
+
+    a = 0 #funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
+    if check(x, y, tab, h) != 1:
         return (1)
 
-
-
+    ini = tab[h[1]][h[0]]
+    tab[h[1]][h[0]] = 'wreck podmiana' #zmienia wartośćaby schodząc w dół sie nie zapętlał
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
             if tab[j][i] == '⛝':
                 a = a + wreck(i, j, tab, [i, j])
 
 
-    print(a)
-
     if a != 0:
-        tab[h[1]][h[0]] = ini
+        tab[h[1]][h[0]] = ini #przywraca wartość orginalną
         return 1
 
     for i in range(x - 1, x + 2):
@@ -146,12 +144,13 @@ def wreck(x, y, tab, h):
             if tab[j][i] == '⛝':
                 sunk(i, j, tab)
 
-    tab[h[1]][h[0]] = ini
-    return a
+    tab[h[1]][h[0]] = ini #przywraca wartość orginalną
+
+    return a #funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
 #sprawdza czy statk jest zatopiony
 
 def shoot(tab):
-    x = int(input("podaj x"))
+    x = int(input("podaj x")) #wpisywanie liter zamiast liczb
     y = int(input("podaj Y"))
 
     if tab[y][x] == '■':
@@ -195,9 +194,11 @@ def settings(pack):
     print("powrót 7")
     num = int(input())
 
-    if num > 0 and num < 6:
+    if num > 0 and num < 5:
         pack[0] = ships_change(pack[0], num)
-
+    elif num == 5:
+        num = int(input("jaką wartość chcesz zmienić?"))
+        pack[0] = ships_change(pack[0], num)
     elif num == 6:
         print("docelowa wartość")
         pack[1] = int(input())
@@ -233,7 +234,7 @@ def welcome(pack):
     elif num == 1:
         tab = rand(pack[1], pack[0])
         while tab == 0:
-            tab = rand(pack[1], pack[0])
+            tab = rand(pack[1], pack[0]) #jak zadasz zbyt trudne ustawienia musi konczyć program w wszystkich takich pętlach z rand (może kolejna funkcja pośrednia)
 
     elif num == 2:
         tab = player_board(pack[1], pack[0])
@@ -254,16 +255,15 @@ if __name__ == '__main__':
 
     player_view(bot)
 
-    i = 0
-    while i != 10:
+    i = 0                #10 krotne wywołanie strzału dla testów
+    while i != 10: #strzały od bota
         shoot(bot)
         clearConsole()
         player_view(bot)
         i = i + 1
 
     draw(bot)
-
-    #inicial comit
+    #wygrana
 
 
 
