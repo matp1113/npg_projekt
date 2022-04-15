@@ -38,6 +38,7 @@ def check(x, y, tab, h = [0, 0]):
     return 1
 #sprawdzanie czy dokoła pola (x, y) jest pole z statkiem + może pominąć jedną kratkę h (potrzebne do funkcji rand)
 
+
 def rand(n, ship):#n wymiar planszy, ship liczba statków o konkretnym wymiarze
     tab = create(n+2)
 
@@ -249,11 +250,13 @@ if __name__ == '__main__':
     tab = welcome(pack)
     draw(tab)
 
+    i = 0
     bot = rand(pack[1], pack[0]) #plansza dla bota w którą strzelamy
     while bot == 0:
         bot = rand(pack[1], pack[0]) #algorytm który szuka możliwej kombinacji jak jest zbyt trudna lub niemożliwa to rip
-
+        i = i + 1
     player_view(bot)
+    print(i) #liczy ile razy się program odpalił
 
     i = 0                #10 krotne wywołanie strzału dla testów
     while i != 10: #todo strzały od bota
