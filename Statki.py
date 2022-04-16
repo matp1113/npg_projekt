@@ -1,6 +1,6 @@
 import random
 import numpy
-
+import printboard as pb
 
 def clearConsole():
     print('\n' * 50)
