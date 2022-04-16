@@ -1,19 +1,19 @@
-# plik na wszystkie funkcje zwiazane z wypisywaniem na ekran
+# Plik na wszystkie funkcje zwiazane z wypisywaniem na ekran
 
 import os
 
 
 def clear_console():
+    # Elegancko czysci konsole i na windowsie i na linuksie
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-# elegancko czysci konsole i na windowsie i na linuksie
-
-
+# Obie ponizsze funkcje dzialaja dla tablic stworzynych funkcja create,
+# przy jej zmianie te funkcje tez trzeba bedzie poprawic.
 def print_both_boards(player_b, si_b):
-    # przyjmuje tablice(plansze) gracza i bota. Zakladam, ze rozmiary obu tablic sa jednakowe
-    # funkcja zwraca tablice w postaci stringa
-    # funkcja (sama!) wypisuje obie plansze obok siebie w ladnej formie
+    # Przyjmuje tablice(plansze) gracza i bota. Zakladam, ze rozmiary obu tablic sa jednakowe
+    # Funkcja zwraca tablice w postaci stringa
+    # Funkcja (sama!) wypisuje obie plansze obok siebie w ladnej formie
     n = len(player_b)
     b1 = 4 * ' '
     for i in range(n - 2):
@@ -37,7 +37,22 @@ def print_both_boards(player_b, si_b):
     print(boards)
     return boards
 
-# def print_player_board(player_b):
-# przyjmuje plansze gracza
-# wypisuje te tablice jak powyzsza
-# zwraca stringa
+
+def print_board(tab_b):
+    # Przyjmuje jedna plansze (gracza lub bota)
+    # Wypisuje te tablice jak powyzsza
+    # Zwraca stringa
+    n = len(tab_b)
+    board = 4 * ' '
+    for i in range(n - 2):
+        board += "/{:^3}".format(tab_b[0][i + 1])
+    board += '/'
+    sep_line = '\n' + 4 * '-' + ((n - 2) * 4 + 1) * '=' + '\n'
+    board += sep_line
+    for i in range(n - 2):
+        board += ' '
+        for j in range(n - 1):
+            board += "{:^3}|".format(tab_b[i + 1][j])
+        board += sep_line
+    print(board)
+    return board
