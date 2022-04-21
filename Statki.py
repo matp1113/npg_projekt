@@ -165,9 +165,29 @@ def wreck(x, y, tab, h):
 # sprawdza czy statek jest zatopiony
 
 def shoot(tab):
-    x = int(input("podaj x"))  # todo wpisywanie liter zamiast liczb
-    y = int(input("podaj Y"))
+    alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16,
+                'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
 
+    y = 0
+    x = 0
+    n_r = range(1, len(tab) - 1)
+    condition = True
+    while(condition):
+        data = input("Wpisz koordynaty strzalu (np. c6)\n")
+        try:
+            y = int(data[1:])
+            x = alphabet[data[0]]
+        except:
+            print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:\n")
+            continue
+        if tab[y][x] == 'x' or tab[x][y] == '⛝':
+            print("W podane pole oddano już strzal! Sprobuj ponownie:\n")
+            continue
+        if x in n_r and y in n_r:
+            condition = False
+        else:
+            print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:\n")
+            continue
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
         a = wreck(x, y, tab, [x, y])
@@ -193,7 +213,7 @@ def player_view(oldtab):
             if tab[y][x] == '■':
                 tab[y][x] = '□'
 
-    draw(tab)
+    pb.print_board(tab)
 
 
 # wypisuje to co widzi gracz
@@ -275,7 +295,7 @@ if __name__ == '__main__':
     pack = [ship, size]  # zrobione jak wskaznik by settings miało dostęp
 
     tab = welcome(pack)
-    draw(tab)
+    pb.print_board(tab)
 
     i = 0
     bot = rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
@@ -293,5 +313,5 @@ if __name__ == '__main__':
         player_view(bot)
         i = i + 1
 
-    draw(bot)
+    pb.print_board(bot)
     # todo wygrana
