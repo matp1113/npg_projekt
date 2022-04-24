@@ -92,7 +92,7 @@ def shoot(tab, ifbot = False):
         target = where_to_shoot(tab)
         x = target [1]
         y = target [0]
-        print (x, y)
+        print (x, y, 'tu strzela')
 
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
@@ -113,13 +113,13 @@ def shoot(tab, ifbot = False):
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
 
-# pobiera kordynaty z klawiatury i strzela
+# strzela
 
 
 def where_to_shoot(tab):
     x = 0
     y = 0
-    size = len(tab) - 1
+    size = len(tab)
     n_r = range(1, size)
 
     while (tab[y][x] != '□' and tab[y][x] != '■'):
@@ -129,6 +129,7 @@ def where_to_shoot(tab):
     for q in n_r:
         for w in n_r:
             if tab[q][w] == "⛝":
+                print(q, w, tab[q][w])
                 if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
                     return ([q + 1, w])
                 elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
@@ -137,9 +138,11 @@ def where_to_shoot(tab):
                     return ([q - 1, w])
                 elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
                     return ([q, w - 1])
+                print("nie ma")
 
-    return ([x, y])
+    return ([y, x])
 #wybiera gdzie bot strzeli
+
 
 def player_view(oldtab):
     tab = numpy.copy(oldtab)
@@ -148,9 +151,10 @@ def player_view(oldtab):
     #    for cell in rows:
     #        if cell == '■':
     #            cell = '□' #idk dlaczego nie działa
+    n_r = range(0, len(tab))
 
-    for x in range(0, len(tab)):
-        for y in range(0, len(tab)):
+    for x in n_r:
+        for y in n_r:
             if tab[y][x] == '■':
                 tab[y][x] = '□'
 
@@ -168,22 +172,16 @@ def player_board(size, ship):
 
 
 def welcome(pack):
-    print("Losowa plansza wcisnij 1", '\n', "Własna plansza wcisnij 2", '\n', "Ustawienia wcisnij 3")
+    print("Losowa plansza wcisnij 1\n", "Własna plansza wcisnij 2\n", "Ustawienia wcisnij 3\n", "szybka gra 4")
     num = int(input())
 
-    if num == 3:
-        clearConsole()
-        while settings.settings(pack) != 0:
-            clearConsole()
-        clearConsole()
-        tab = welcome(pack)
 
-    elif num == 1:
+
+    if num == 1:
         i = 0
         tab = gs.rand(pack[1], pack[0])
         while tab == 0:
-            tab = gs.rand(pack[1], pack[
-                0])
+            tab = gs.rand(pack[1], pack[0])
             i = i + 1
             if i > 1000000: #maks milion powtórzeń
                 print("Proszę o lepsze ustawienia!\n")
@@ -192,11 +190,44 @@ def welcome(pack):
 
         print(i)  # liczy ile razy się program odpalił
     elif num == 2:
-        tab = player_board(pack[1], pack[0])
+        tab = player_board(pack[1], pack[0]) #TODO Plansza z klawiatury
+
+    elif num == 3:
+        clearConsole()
+        while settings.settings(pack) != 0:
+            clearConsole()
+        clearConsole()
+        tab = welcome(pack)
+
+    elif num == 4:
+        i = 0
+        pack[0] = [3, 2, 1]
+        pack[1] = 5
+        tab = gs.rand(pack[1], pack[0])
+        while tab == 0:
+            tab = gs.rand(pack[1], pack[0])
+            i = i + 1
+            if i > 1000000:  # maks milion powtórzeń
+                print("Proszę o lepsze ustawienia!\n")
+                i = 0
+                settings.settings(pack)
+
+    else:
+        print("Proszę wybrać iny numer\n")
+        tab = welcome(pack)
     return tab
 
 
 # witam
+
+def wygrana(tab):
+    n_r = range(1, len(tab) - 1)
+
+    for y in n_r:
+        for x in n_r:
+            if tab[y][x] == "■":
+                return 0
+    return 1
 
 if __name__ == '__main__':
     ship = [4, 3, 2, 1]
@@ -214,15 +245,18 @@ if __name__ == '__main__':
 
     player_view(bot)
 
-    i = 0  # 10 krotne wywołanie strzału dla testów
-    while i != 10:
+
+    while (wygrana(tab) == 0 and wygrana(bot) == 0):
         shoot(bot)
         shoot(tab, True)
         clearConsole()
         pb.print_board(tab)
         player_view(bot)
-        i = i + 1
 
-    pb.print_board(bot)
-    #TODO wygrana
+
+    if wygrana(tab) == 1:
+        print("Komputer wygrał\n")
+
+    if wygrana(bot) == 1:
+        print("Wygrałeś!!!!\n Gratuluję")
 
