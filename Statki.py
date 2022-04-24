@@ -2,19 +2,11 @@ import random
 import numpy
 import printboard as pb
 import generateships as gs
+import settings
 
 
 def clearConsole():
     print('\n' * 50)
-
-
-
-
-
-
-
-
-
 
 def sunk(x, y, tab):
     if check(x, y, tab) == 1:
@@ -24,8 +16,18 @@ def sunk(x, y, tab):
                 if tab[j][i] == '□':
                     tab[j][i] = 'x'
 
-
 # zatapia (obrysowuje) daną kratkę
+
+def check(x, y, tab, h=[0, 0]):
+    ini = tab[h[1]][h[0]]
+    tab[h[1]][h[0]] = 'check podmiana'
+    for i in range(x - 1, x + 2):
+        for j in range(y - 1, y + 2):
+            if tab[j][i] == '■':
+                tab[h[1]][h[0]] = ini
+                return 0
+    tab[h[1]][h[0]] = ini
+    return 1
 
 def wreck(x, y, tab, h):
     a = 0  # funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
@@ -52,10 +54,9 @@ def wreck(x, y, tab, h):
 
     return a  # funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
 
-
 # sprawdza czy statek jest zatopiony
 
-def shoot(tab):
+def shoot(tab, ifbot = False):
     alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
                 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
@@ -85,10 +86,19 @@ def shoot(tab):
         a = wreck(x, y, tab, [x, y])
         if a == 0:
             sunk(x, y, tab)
+        else:
+            if tab[y - 1][x - 1] == '□':
+                tab[y - 1][x - 1] = 'x'
+            if tab[y - 1][x + 1] == '□':
+                tab[y - 1][x + 1] = 'x'
+            if tab[y + 1][x - 1] == '□':
+                tab[y + 1][x - 1] = 'x'
+            if tab[y + 1][x + 1] == '□':
+                tab[y + 1][x + 1] = 'x'
+
 
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
-
 
 # pobiera kordynaty z klawiatury i strzela
 
@@ -118,63 +128,31 @@ def player_board(size, ship):
 
 # generuje plansze gracza
 
-def settings(pack):
-    print("modyfikacja liczby jedynek wcisnij 1")
-    print("modyfikacja  liczby dwójek 2")
-    print("modyfikacja liczby trójek 3")
-    print("modyfikacja liczby czwórek 4")
-    print("własne wielkosci statków wcisnij 5")
-    print("modyfikacja rozmiaru planszy wcisnij 6")
-    print("powrót 7")
-    num = int(input())
-
-    if num > 0 and num < 5:
-        pack[0] = ships_change(pack[0], num)
-    elif num == 5:
-        num = int(input("jaką wartość chcesz zmienić?"))
-        pack[0] = ships_change(pack[0], num)
-    elif num == 6:
-        print("docelowa wartość")
-        pack[1] = int(input())
-
-
-# mapa ustawień (zmienia mapę lub odsyła do zmiany liczby statków
-
-def ships_change(ship, num):
-    new = numpy.zeros(num, dtype=int)
-
-    if num >= len(ship) + 1:
-
-        for x in range(0, len(ship)):
-            new[x] = ship[x]
-
-        print("liczba statków o wielkości", num, 0)
-    else:
-        new = ship
-        print("liczba statków o wielkości", num, ship[num - 1])
-    print("docelowa wartość:")
-
-    new[num - 1] = int(input())
-    clearConsole()
-    return (new)
-
-
-# zmiany liczby statków
 
 def welcome(pack):
     print("Losowa plansza wcisnij 1", '\n', "Własna plansza wcisnij 2", '\n', "Ustawienia wcisnij 3")
     num = int(input())
 
     if num == 3:
-        settings(pack)
+        clearConsole()
+        while settings.settings(pack) != 0:
+            clearConsole()
+        clearConsole()
         tab = welcome(pack)
 
     elif num == 1:
+        i = 0
         tab = gs.rand(pack[1], pack[0])
         while tab == 0:
             tab = gs.rand(pack[1], pack[
-                0])  # todo jak zadasz zbyt trudne ustawienia musi konczyć program w wszystkich takich pętlach z rand (może kolejna funkcja pośrednia)
+                0])
+            i = i + 1
+            if i > 1000000: #maks milion powtórzeń
+                print("proszę o lepsze ustawienia!\n")
+                i = 0
+                settings.settings(pack)
 
+        print(i)  # liczy ile razy się program odpalił
     elif num == 2:
         tab = player_board(pack[1], pack[0])
     return tab
@@ -190,14 +168,13 @@ if __name__ == '__main__':
     tab = welcome(pack)
     pb.print_board(tab)
 
-    i = 0
+
     bot = gs.rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
     while bot == 0:
         bot = gs.rand(pack[1],
-                   pack[0])  # algorytm który szuka możliwej kombinacji jak jest zbyt trudna lub niemożliwa to rip
-        i = i + 1
+                   pack[0])
+
     player_view(bot)
-    print(i)  # liczy ile razy się program odpalił
 
     i = 0  # 10 krotne wywołanie strzału dla testów
     while i != 10:  #todo strzały od bota
