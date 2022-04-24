@@ -61,26 +61,29 @@ def shoot(tab, ifbot = False):
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
                 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
 
-    y = 0
-    x = 0
-    n_r = range(1, len(tab) - 1)
-    while True:
-        data = input("Wpisz koordynaty strzalu (np. c6):\n")
-        try:
-            y = int(data[1:])
-            x = alphabet[data[0]]
-        except:
-            print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
-            continue
-        if x in n_r and y in n_r:
-            if tab[y][x] == 'x' or tab[y][x] == '⛝':
-                print("W podane pole oddano już strzal! Sprobuj ponownie:")
+    if (~ifbot):
+        y = 0
+        x = 0
+        n_r = range(1, len(tab) - 1)
+        while True:
+            data = input("Wpisz koordynaty strzalu (np. c6):\n")
+            try:
+                y = int(data[1:])
+                x = alphabet[data[0]]
+            except:
+                print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
                 continue
+            if x in n_r and y in n_r:
+                if tab[y][x] == 'x' or tab[y][x] == '⛝':
+                    print("W podane pole oddano już strzal! Sprobuj ponownie:")
+                    continue
+                else:
+                    break
             else:
-                break
-        else:
-            print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
-            continue
+                print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
+                continue
+
+
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
         a = wreck(x, y, tab, [x, y])
@@ -95,7 +98,6 @@ def shoot(tab, ifbot = False):
                 tab[y + 1][x - 1] = 'x'
             if tab[y + 1][x + 1] == '□':
                 tab[y + 1][x + 1] = 'x'
-
 
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
@@ -148,7 +150,7 @@ def welcome(pack):
                 0])
             i = i + 1
             if i > 1000000: #maks milion powtórzeń
-                print("proszę o lepsze ustawienia!\n")
+                print("Proszę o lepsze ustawienia!\n")
                 i = 0
                 settings.settings(pack)
 
