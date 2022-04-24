@@ -3,10 +3,13 @@ import numpy
 import printboard as pb
 import generateships as gs
 import settings
+#import os
 
 
 def clearConsole():
     print('\n' * 50)
+    #os.system('cls' if os.name == 'nt' else 'clear') # w pycharmie daje mi kwadracik
+
 
 def sunk(x, y, tab):
     if check(x, y, tab) == 1:
@@ -61,10 +64,12 @@ def shoot(tab, ifbot = False):
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
                 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
 
-    if (~ifbot):
+    if (ifbot == False):
         y = 0
         x = 0
-        n_r = range(1, len(tab) - 1)
+        size = len(tab) - 1
+        n_r = range(1, size)
+
         while True:
             data = input("Wpisz koordynaty strzalu (np. c6):\n")
             try:
@@ -83,6 +88,11 @@ def shoot(tab, ifbot = False):
                 print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
                 continue
 
+    elif (ifbot == True):
+        target = where_to_shoot(tab)
+        x = target [1]
+        y = target [0]
+        print (x, y)
 
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
@@ -99,11 +109,37 @@ def shoot(tab, ifbot = False):
             if tab[y + 1][x + 1] == '□':
                 tab[y + 1][x + 1] = 'x'
 
+
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
 
 # pobiera kordynaty z klawiatury i strzela
 
+
+def where_to_shoot(tab):
+    x = 0
+    y = 0
+    size = len(tab) - 1
+    n_r = range(1, size)
+
+    while (tab[y][x] != '□' and tab[y][x] != '■'):
+        x = random.randint(1, size - 1)
+        y = random.randint(1, size - 1)
+
+    for q in n_r:
+        for w in n_r:
+            if tab[q][w] == "⛝":
+                if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
+                    return ([q + 1, w])
+                elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
+                    return ([q, w + 1])
+                elif tab[q - 1][w] == '□' or tab[q - 1][w] == '■':
+                    return ([q - 1, w])
+                elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
+                    return ([q, w - 1])
+
+    return ([x, y])
+#wybiera gdzie bot strzeli
 
 def player_view(oldtab):
     tab = numpy.copy(oldtab)
@@ -179,9 +215,11 @@ if __name__ == '__main__':
     player_view(bot)
 
     i = 0  # 10 krotne wywołanie strzału dla testów
-    while i != 10:  #todo strzały od bota
+    while i != 10:
         shoot(bot)
+        shoot(tab, True)
         clearConsole()
+        pb.print_board(tab)
         player_view(bot)
         i = i + 1
 
