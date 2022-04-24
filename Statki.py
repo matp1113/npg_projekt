@@ -92,7 +92,6 @@ def shoot(tab, ifbot = False):
         target = where_to_shoot(tab)
         x = target [1]
         y = target [0]
-        print (x, y, 'tu strzela')
 
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
@@ -129,7 +128,6 @@ def where_to_shoot(tab):
     for q in n_r:
         for w in n_r:
             if tab[q][w] == "⛝":
-                print(q, w, tab[q][w])
                 if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
                     return ([q + 1, w])
                 elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
@@ -138,7 +136,6 @@ def where_to_shoot(tab):
                     return ([q - 1, w])
                 elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
                     return ([q, w - 1])
-                print("nie ma")
 
     return ([y, x])
 #wybiera gdzie bot strzeli
