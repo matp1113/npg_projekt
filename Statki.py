@@ -108,9 +108,13 @@ def shoot(tab, ifbot = False):
             if tab[y + 1][x + 1] == '□':
                 tab[y + 1][x + 1] = 'x'
 
+        return 1 #czy masz następny strzał
+
 
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
+
+    return 0
 
 # strzela
 
@@ -128,6 +132,21 @@ def where_to_shoot(tab):
     for q in n_r:
         for w in n_r:
             if tab[q][w] == "⛝":
+
+                if tab[q + 1][w] == "⛝" or tab[q - 1][w] == "⛝":
+                    if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
+                        return ([q + 1, w])
+                    elif tab[q - 1][w] == '□' or tab[q - 1][w] == '■':
+                        return ([q - 1, w])
+
+                elif tab[q][w + 1] == "⛝" or tab[q][w - 1] == "⛝":
+                    if tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
+                        return ([q, w + 1])
+                    elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
+                        return ([q, w - 1])
+
+
+
                 if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
                     return ([q + 1, w])
                 elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
@@ -242,18 +261,28 @@ if __name__ == '__main__':
 
     player_view(bot)
 
+    i=0 #liczebie strzałów
 
     while (wygrana(tab) == 0 and wygrana(bot) == 0):
-        shoot(bot)
-        shoot(tab, True)
+        while (shoot(bot) == 1 and wygrana(bot) == 0):
+            pb.print_board(tab)
+            player_view(bot)
+
+        while (shoot(tab, True) == 1 and wygrana(tab) == 0):
+            pb.print_board(tab)
+            player_view(bot)
+        i=i+1
+
         clearConsole()
         pb.print_board(tab)
         player_view(bot)
 
 
     if wygrana(tab) == 1:
-        print("Komputer wygrał\n")
+        print("Komputer wygrał w", i, "salwach\n")
+
 
     if wygrana(bot) == 1:
-        print("Wygrałeś!!!!\n Gratuluję")
+        print("Wygrałeś w ", i, "salwach\n Gratuluję")
+
 
