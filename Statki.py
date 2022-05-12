@@ -179,9 +179,6 @@ def player_view(oldtab):
 
 # wypisuje to co widzi gracz
 
-def player_board(size, ship):
-    tab = create(size + 2)
-    return (tab)
 
 
 # generuje plansze gracza
@@ -206,7 +203,7 @@ def welcome(pack):
 
         print(i)  # liczy ile razy się program odpalił
     elif num == 2:
-        tab = player_board(pack[1], pack[0]) #TODO Plansza z klawiatury
+        tab = gs.generate(pack[1], pack[0])
 
     elif num == 3:
         clearConsole()
@@ -263,7 +260,7 @@ if __name__ == '__main__':
 
     i=0 #liczebie strzałów
 
-    while (wygrana(tab) == 0 and wygrana(bot) == 0):
+    while (wygrana(tab) == 0 and wygrana(bot) == 0): #chyba można by trochę zoptymalizować z wyskakiwaniem
         while (shoot(bot) == 1 and wygrana(bot) == 0):
             pb.print_board(tab)
             player_view(bot)
