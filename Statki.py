@@ -201,7 +201,6 @@ def welcome(pack):
                 i = 0
                 settings.settings(pack)
 
-        print(i)  # liczy ile razy się program odpalił
     elif num == 2:
         tab = gs.generate(pack[1], pack[0])
 
