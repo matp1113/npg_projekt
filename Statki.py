@@ -284,4 +284,6 @@ if __name__ == '__main__':
     if wygrana(bot) == 1:
         print("Wygrałeś w ", i, "salwach\n Gratuluję")
 
+    a = input() #nie wyłącza się od razu po końcu
+
 
