@@ -203,6 +203,9 @@ def welcome(pack):
 
     elif num == 2:
         tab = gs.generate(pack[1], pack[0])
+        if tab == 1:
+            tab = welcome(pack)
+
 
     elif num == 3:
         clearConsole()

@@ -122,7 +122,9 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
 
             print_board(tab)
             while True:
-                data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\n")
+                data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\n Powrót - wpisz esc\n")
+                if data == "esc":
+                    return 1
                 try:
                     y = int(data[1:])
                     x = alphabet[data[0]]
