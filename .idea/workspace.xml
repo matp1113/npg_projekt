@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="możliwość abortowania własnej mapy">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="bugfix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652632063650</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="bugfix">
+      <created>1652633733736</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1652633733736</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,9 +199,9 @@
     <MESSAGE value="wielostrzały, plus bot lepiej strzela" />
     <MESSAGE value="generowanie własnej mapy" />
     <MESSAGE value="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek" />
-    <MESSAGE value="bugfix" />
     <MESSAGE value="maksymalna wielkość planszy" />
     <MESSAGE value="możliwość abortowania własnej mapy" />
-    <option name="LAST_COMMIT_MESSAGE" value="możliwość abortowania własnej mapy" />
+    <MESSAGE value="bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
   </component>
 </project>

@@ -186,11 +186,11 @@ def player_view(oldtab):
 
 def welcome(pack):
     print("Gra z losową planszą - wcisnij 1\n", "Gra z własną planszą - wcisnij 2\n", "Ustawienia - wcisnij 3\n", "szybka gra - wcisnij 4")
-    num = int(input())
+    num = input()
 
 
 
-    if num == 1:
+    if num == "1":
         i = 0
         tab = gs.rand(pack[1], pack[0])
         while tab == 0:
@@ -201,20 +201,20 @@ def welcome(pack):
                 i = 0
                 settings.settings(pack)
 
-    elif num == 2:
+    elif num == "2":
         tab = gs.generate(pack[1], pack[0])
         if tab == 1:
             tab = welcome(pack)
 
 
-    elif num == 3:
+    elif num == "3":
         clearConsole()
         while settings.settings(pack) != 0:
             clearConsole()
         clearConsole()
         tab = welcome(pack)
 
-    elif num == 4:
+    elif num == "4":
         i = 0
         pack[0] = [3, 2, 1]
         pack[1] = 5
@@ -228,7 +228,7 @@ def welcome(pack):
                 settings.settings(pack)
 
     else:
-        print("Proszę wybrać iny numer\n")
+        print("Proszę wybrać inny numer\n")
         tab = welcome(pack)
     return tab
 
