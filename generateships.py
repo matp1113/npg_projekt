@@ -132,7 +132,7 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
                     print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
                     continue
                 if x in n_r and y in n_r:
-                    if check(x, y, tab) == 0 or tab[y][x] != '□' or four_multiples_check(x, y, j, tab, n) == 1:
+                    if check(x, y, tab) == 0 or tab[y][x] != '□' or four_multiples_checks(x, y, j, tab, n) == 1:
                         print("Nieprawidłowe pole! Sprobuj ponownie:")
                         continue
                     else:
@@ -193,7 +193,7 @@ def multiple_check(x, y, j, data, tab, n, case = 0):
     else:
         return 1
 
-def four_multiples_check(x, y, j, tab, n):
+def four_multiples_checks(x, y, j, tab, n):
     if multiple_check(x, y, j, 'w', tab, n) == 0:
         return 0
     if multiple_check(x, y, j, 's', tab, n) == 0:
