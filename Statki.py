@@ -185,7 +185,7 @@ def player_view(oldtab):
 
 
 def welcome(pack):
-    print("Losowa plansza wcisnij 1\n", "Własna plansza wcisnij 2\n", "Ustawienia wcisnij 3\n", "szybka gra 4")
+    print("Gra z losową planszą - wcisnij 1\n", "Gra z własną planszą - wcisnij 2\n", "Ustawienia - wcisnij 3\n", "szybka gra - wcisnij 4")
     num = int(input())
 
 
