@@ -35,35 +35,35 @@ def rand(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wymiar
             if check(x, y, tab) == 0:
                 return (0)
 
-            dir = twist(x, y, j, n)
+            if j > 1:
+                dir = twist(x, y, j, n)
 
-            if dir == 0:
-                return (0)
+                if dir == 0:
+                    return (0)
 
+                if (dir[0] > 0):  # sprawdzenie w którą stronę wylosowało
+                    for a in range(1, j):
+                        if check(x + a, y, tab, [x + a - 1, y]) == 0:
+                            return (0)
+                        tab[y][x + a] = '■'
 
-            if (dir[0] > 0):  # sprawdzenie w którą stronę wylosowało
-                for a in range(1, j):
-                    if check(x + a, y, tab, [x + a - 1, y]) == 0:
-                        return (0)
-                    tab[y][x + a] = '■'
+                if (dir[0] < 0):
+                    for a in range(1, j):
+                        if check(x - a, y, tab, [x - a + 1, y]) == 0:
+                            return (0)
+                        tab[y][x - a] = '■'
 
-            if (dir[0] < 0):
-                for a in range(1, j):
-                    if check(x - a, y, tab, [x - a + 1, y]) == 0:
-                        return (0)
-                    tab[y][x - a] = '■'
+                if (dir[1] > 0):
+                    for a in range(1, j):
+                        if check(x, y + a, tab, [x, y + a - 1]) == 0:
+                            return (0)
+                        tab[y + a][x] = '■'
 
-            if (dir[1] > 0):
-                for a in range(1, j):
-                    if check(x, y + a, tab, [x, y + a - 1]) == 0:
-                        return (0)
-                    tab[y + a][x] = '■'
-
-            if (dir[1] < 0):
-                for a in range(1, j):
-                    if check(x, y - a, tab, [x, y - a + 1]) == 0:
-                        return (0)
-                    tab[y - a][x] = '■'
+                if (dir[1] < 0):
+                    for a in range(1, j):
+                        if check(x, y - a, tab, [x, y - a + 1]) == 0:
+                            return (0)
+                        tab[y - a][x] = '■'
 
             tab[y][x] = '■'
         j = j - 1
