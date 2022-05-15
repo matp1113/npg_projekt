@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="bugfix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generateships.py" beforeDir="false" afterPath="$PROJECT_DIR$/generateships.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +142,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652628838917</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="bugfix">
+      <created>1652630232838</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1652630232838</updated>
+    </task>
+    <task id="LOCAL-00012" summary="bugfix">
+      <created>1652630496881</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1652630496881</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -165,6 +179,7 @@
     <MESSAGE value="wielostrzały, plus bot lepiej strzela" />
     <MESSAGE value="generowanie własnej mapy" />
     <MESSAGE value="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek" />
-    <option name="LAST_COMMIT_MESSAGE" value="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek" />
+    <MESSAGE value="bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
   </component>
 </project>

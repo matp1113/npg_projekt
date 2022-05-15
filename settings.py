@@ -20,8 +20,14 @@ def settings(pack):
         return 1
 
     elif num == 6:
-        print("docelowa wartość")
-        pack[1] = int(input())
+        while True:
+            print("docelowa wartość- maks 25")
+            x = int(input())
+            if x > 25:
+                print("wartość za duża")
+                continue
+            pack[1] = x
+            break
         return 1
 
     elif num == 7:
