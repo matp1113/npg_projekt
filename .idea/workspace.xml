@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="na ekranie startowym można dać dowolny znak i program się nie wywala">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="własna plansza i lepsze wyświetlanie">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Statki.py" beforeDir="false" afterPath="$PROJECT_DIR$/Statki.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateships.py" beforeDir="false" afterPath="$PROJECT_DIR$/generateships.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/printboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/printboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +39,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Statki.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../programowanie/Python/pythonProject" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.splitter.proportion" value="0.21221532" />
   </component>
   <component name="RunManager">
     <configuration name="Statki" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -46,7 +50,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\Chyba Ja\PycharmProjects\1projekt\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\roman\AppData\Local\Programs\Python\Python39\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -113,77 +117,7 @@
       <option name="project" value="LOCAL" />
       <updated>1650816046958</updated>
     </task>
-    <task id="LOCAL-00007" summary="wielostrzały, plus bot lepiej strzela">
-      <created>1650874523826</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1650874523826</updated>
-    </task>
-    <task id="LOCAL-00008" summary="generowanie własnej mapy">
-      <created>1652394244243</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1652394244243</updated>
-    </task>
-    <task id="LOCAL-00009" summary="generowanie własnej mapy">
-      <created>1652394370908</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1652394370908</updated>
-    </task>
-    <task id="LOCAL-00010" summary="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek">
-      <created>1652628838917</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1652628838917</updated>
-    </task>
-    <task id="LOCAL-00011" summary="bugfix">
-      <created>1652630232838</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1652630232838</updated>
-    </task>
-    <task id="LOCAL-00012" summary="bugfix">
-      <created>1652630496881</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1652630496881</updated>
-    </task>
-    <task id="LOCAL-00013" summary="maksymalna wielkość planszy">
-      <created>1652631392885</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1652631392885</updated>
-    </task>
-    <task id="LOCAL-00014" summary="możliwość abortowania własnej mapy">
-      <created>1652632063649</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1652632063650</updated>
-    </task>
-    <task id="LOCAL-00015" summary="bugfix">
-      <created>1652633733736</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1652633733736</updated>
-    </task>
-    <task id="LOCAL-00016" summary="na ekranie startowym można dać dowolny znak i program się nie wywala">
-      <created>1652640209659</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1652640209659</updated>
-    </task>
-    <option name="localTasksCounter" value="17" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,13 +137,6 @@
     <MESSAGE value="kolejne pliki plus maksymalne ustawienia" />
     <MESSAGE value="bot strzela" />
     <MESSAGE value="własna plansza i lepsze wyświetlanie" />
-    <MESSAGE value="wielostrzały, plus bot lepiej strzela" />
-    <MESSAGE value="generowanie własnej mapy" />
-    <MESSAGE value="zrobiłem warunek by niepotrzebnie nie sprawdzał obrotu dla jedynek" />
-    <MESSAGE value="maksymalna wielkość planszy" />
-    <MESSAGE value="możliwość abortowania własnej mapy" />
-    <MESSAGE value="bugfix" />
-    <MESSAGE value="na ekranie startowym można dać dowolny znak i program się nie wywala" />
-    <option name="LAST_COMMIT_MESSAGE" value="na ekranie startowym można dać dowolny znak i program się nie wywala" />
+    <option name="LAST_COMMIT_MESSAGE" value="własna plansza i lepsze wyświetlanie" />
   </component>
 </project>

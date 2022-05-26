@@ -32,8 +32,17 @@ def print_both_boards(player_b, si_b):
         for j in range(n - 1):
             boards += "{:^3}|".format(si_b[i + 1][j])
         boards += f_sep_line
-    boards += "{0:^45}{1:11}{0:^45}".format(5 * '_', '') + '\n'
-    boards += "{:^45}{:11}{:^45}".format("| YOU |", '', "| ENEMY |") + '\n'
+
+    gap2 = 5 + 4 * (n - 2)
+
+    boards += ((gap2 - 5) // 2) * ' ' + 5 * '_' + ((gap2 - 5) // 2) * ' ' + 11 * ' ' + \
+              ((gap2 - 7) // 2) * ' ' + 7 * '_' + ((gap2 - 7) // 2) * ' ' + '\n'
+    boards += ((gap2 - 7) // 2) * ' ' + "| YOU |" + ((gap2 - 7) // 2) * ' ' + \
+              11 * ' ' + ((gap2 - 9) // 2) * ' ' + "| ENEMY |" + '\n'
+
+    # boards += "{0:^45}{1:11}{0:^45}".format(5 * '_', '') + '\n'
+    # boards += "{:^45}{:11}{:^45}".format("| YOU |", '', "| ENEMY |") + '\n'
+
     print(boards)
     return boards
 

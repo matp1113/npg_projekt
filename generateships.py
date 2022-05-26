@@ -1,4 +1,6 @@
 import random
+import printboard as pb
+
 
 def twist(x, y, l, n):
     tab = []
@@ -70,6 +72,7 @@ def rand(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wymiar
 
     return tab
 
+
 # tworzy planszę z losowym ułożeniem statków i sprawdza czy jest ok
 # jak jest zle to zwraca 0
 
@@ -89,6 +92,7 @@ def create(n):
         tab[0][n - 1] = ' '
 
     return (tab)
+
 
 # tworzy plansze z obramowaniem
 
@@ -113,14 +117,12 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
     tab = create(n + 2)
     n_r = range(1, len(tab) - 1)
 
-
     j = len(ship)
     while j > 0:
         for i in range(0, ship[j - 1]):  # liczba statków
             a = 2
 
-
-            print_board(tab)
+            pb.print_board(tab)
             while True:
                 data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\n Powrót - wpisz esc\n")
                 if data == "esc":
@@ -149,20 +151,19 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
                         print("Kierunek podany nieprawidlowo! Sprobuj ponownie:")
                 multiple_check(x, y, j, data, tab, n, 1)
 
-
             tab[y][x] = '■'
         j = j - 1
 
     return tab
 
-def multiple_check(x, y, j, data, tab, n, case = 0):
+
+def multiple_check(x, y, j, data, tab, n, case=0):
     if data == 'w' and y - j > 1:
         for a in range(1, j):
             if check(x, y - a, tab, [x, y - a + 1]) == 0:
                 return 1
             if case != 0:
                 tab[y - a][x] = '■'
-
 
         return 0
 
@@ -174,7 +175,7 @@ def multiple_check(x, y, j, data, tab, n, case = 0):
                 tab[y][x - a] = '■'
         return 0
 
-    elif data == 's' and y + j < n +2 :
+    elif data == 's' and y + j < n + 2:
         for a in range(1, j):
             if check(x, y + a, tab, [x, y + a - 1]) == 0:
                 return 1
@@ -182,7 +183,7 @@ def multiple_check(x, y, j, data, tab, n, case = 0):
                 tab[y + a][x] = '■'
         return 0
 
-    elif data == 'd' and x + j < n +2:
+    elif data == 'd' and x + j < n + 2:
         for a in range(1, j):
             if check(x + a, y, tab, [x + a - 1, y]) == 0:
                 return 1
@@ -192,6 +193,7 @@ def multiple_check(x, y, j, data, tab, n, case = 0):
 
     else:
         return 1
+
 
 def four_multiples_checks(x, y, j, tab, n):
     if multiple_check(x, y, j, 'w', tab, n) == 0:
@@ -203,23 +205,3 @@ def four_multiples_checks(x, y, j, tab, n):
     if multiple_check(x, y, j, 'd', tab, n) == 0:
         return 0
     return 1
-
-
-def print_board(tab_b):
-    # Przyjmuje jedna plansze (gracza lub bota)
-    # Wypisuje te tablice jak powyzsza
-    # Zwraca stringa
-    n = len(tab_b)
-    board = 4 * ' '
-    for i in range(n - 2):
-        board += "/{:^3}".format(tab_b[0][i + 1])
-    board += '/'
-    sep_line = '\n' + 4 * '-' + ((n - 2) * 4 + 1) * '=' + '\n'
-    board += sep_line
-    for i in range(n - 2):
-        board += ' '
-        for j in range(n - 1):
-            board += "{:^3}|".format(tab_b[i + 1][j])
-        board += sep_line
-    print(board)
-    return board

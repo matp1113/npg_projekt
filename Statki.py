@@ -3,12 +3,14 @@ import numpy
 import printboard as pb
 import generateships as gs
 import settings
-#import os
+
+
+# import os
 
 
 def clearConsole():
     print('\n' * 50)
-    #os.system('cls' if os.name == 'nt' else 'clear') # w pycharmie daje mi kwadracik
+    # os.system('cls' if os.name == 'nt' else 'clear') # w pycharmie daje mi kwadracik
 
 
 def sunk(x, y, tab):
@@ -18,6 +20,7 @@ def sunk(x, y, tab):
             for j in range(y - 1, y + 2):
                 if tab[j][i] == '□':
                     tab[j][i] = 'x'
+
 
 # zatapia (obrysowuje) daną kratkę
 
@@ -31,6 +34,7 @@ def check(x, y, tab, h=[0, 0]):
                 return 0
     tab[h[1]][h[0]] = ini
     return 1
+
 
 def wreck(x, y, tab, h):
     a = 0  # funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
@@ -59,7 +63,7 @@ def wreck(x, y, tab, h):
 
 # sprawdza czy statek jest zatopiony
 
-def shoot(tab, ifbot = False):
+def shoot(tab, ifbot=False):
     alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
                 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
@@ -90,8 +94,8 @@ def shoot(tab, ifbot = False):
 
     elif (ifbot == True):
         target = where_to_shoot(tab)
-        x = target [1]
-        y = target [0]
+        x = target[1]
+        y = target[0]
 
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
@@ -108,7 +112,7 @@ def shoot(tab, ifbot = False):
             if tab[y + 1][x + 1] == '□':
                 tab[y + 1][x + 1] = 'x'
 
-        return 1 #czy masz następny strzał
+        return 1  # czy masz następny strzał
 
 
     elif tab[y][x] == '□':
@@ -145,8 +149,6 @@ def where_to_shoot(tab):
                     elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
                         return ([q, w - 1])
 
-
-
                 if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
                     return ([q + 1, w])
                 elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
@@ -157,7 +159,8 @@ def where_to_shoot(tab):
                     return ([q, w - 1])
 
     return ([y, x])
-#wybiera gdzie bot strzeli
+
+# wybiera gdzie bot strzeli
 
 
 def player_view(oldtab):
@@ -174,21 +177,16 @@ def player_view(oldtab):
             if tab[y][x] == '■':
                 tab[y][x] = '□'
 
-    pb.print_board(tab)
-
+    return tab
 
 # wypisuje to co widzi gracz
-
-
-
 # generuje plansze gracza
 
 
 def welcome(pack):
-    print("Gra z losową planszą - wcisnij 1\n", "Gra z własną planszą - wcisnij 2\n", "Ustawienia - wcisnij 3\n", "szybka gra - wcisnij 4")
+    print("Gra z losową planszą - wcisnij 1\n", "Gra z własną planszą - wcisnij 2\n", "Ustawienia - wcisnij 3\n",
+          "szybka gra - wcisnij 4")
     num = input()
-
-
 
     if num == "1":
         i = 0
@@ -196,7 +194,7 @@ def welcome(pack):
         while tab == 0:
             tab = gs.rand(pack[1], pack[0])
             i = i + 1
-            if i > 1000000: #maks milion powtórzeń
+            if i > 1000000:  # maks milion powtórzeń
                 print("Proszę o lepsze ustawienia!\n")
                 i = 0
                 settings.settings(pack)
@@ -232,7 +230,6 @@ def welcome(pack):
         tab = welcome(pack)
     return tab
 
-
 # witam
 
 def wygrana(tab):
@@ -244,46 +241,40 @@ def wygrana(tab):
                 return 0
     return 1
 
+
 if __name__ == '__main__':
     ship = [4, 3, 2, 1]
     size = 10  # rozmiar
     pack = [ship, size]  # zrobione jak wskaznik by settings miało dostęp
 
     tab = welcome(pack)
-    pb.print_board(tab)
-
 
     bot = gs.rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
     while bot == 0:
-        bot = gs.rand(pack[1],
-                   pack[0])
+        bot = gs.rand(pack[1], pack[0])
 
-    player_view(bot)
+    pb.print_both_boards(tab, player_view(bot))
 
-    i=0 #liczebie strzałów
+    i = 0  # liczebie strzałów
 
-    while (wygrana(tab) == 0 and wygrana(bot) == 0): #chyba można by trochę zoptymalizować z wyskakiwaniem
+    while (wygrana(tab) == 0 and wygrana(bot) == 0):  # chyba można by trochę zoptymalizować z wyskakiwaniem
         while (shoot(bot) == 1 and wygrana(bot) == 0):
-            pb.print_board(tab)
-            player_view(bot)
+            clearConsole()
+            pb.print_both_boards(tab, player_view(bot))
 
         while (shoot(tab, True) == 1 and wygrana(tab) == 0):
-            pb.print_board(tab)
-            player_view(bot)
-        i=i+1
+            clearConsole()
+            pb.print_both_boards(tab, player_view(bot))
+
+        i = i + 1
 
         clearConsole()
-        pb.print_board(tab)
-        player_view(bot)
-
+        pb.print_both_boards(tab, player_view(bot))
 
     if wygrana(tab) == 1:
         print("Komputer wygrał w", i, "salwach\n")
 
-
     if wygrana(bot) == 1:
         print("Wygrałeś w ", i, "salwach\n Gratuluję")
 
-    a = input() #nie wyłącza się od razu po końcu
-
-
+    a = input()  # nie wyłącza się od razu po końcu
