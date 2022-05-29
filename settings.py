@@ -1,5 +1,6 @@
 import numpy
 
+
 def settings(pack):
     print("modyfikacja liczby jedynek wcisnij 1")
     print("modyfikacja  liczby dwójek 2")
@@ -10,7 +11,7 @@ def settings(pack):
     print("powrót 7")
     num = int(input())
 
-    if num > 0 and num < 5:
+    if 0 < num < 5:
         pack[0] = ships_change(pack[0], num)
         return 1
 
@@ -48,10 +49,24 @@ def ships_change(ship, num):
     else:
         new = ship
         print("liczba statków o wielkości", num, ship[num - 1])
-    print("docelowa wartość:")
+    print("docelowa wartość: ")
 
     new[num - 1] = int(input())
     return (new)
+
+
+def print_main_menu() -> str:
+    print("{:^50}\n".format("STATKI") + 50 * "=")
+    menu = ("{:<40} wciśnij 1\n".format("Gra z losową planszą") +
+            "{:<40} wciśnij 2\n".format("Gra z własną planszą") +
+            "{:<40} wciśnij 3\n".format("Ustawienia") +
+            "{:<40} wciśnij 4\n".format("Szybka Gra") +
+            "{:<40} wciśnij 5\n".format("Zasady Gry")).replace("  ", " .")  # TODO: zrobic printowanie zasad (w nowej
+                                                                            # funkcji - wywoływanej w welcome())
+    
+    print(menu)
+
+    return input()
 
 
 # zmiany liczby statków

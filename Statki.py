@@ -63,6 +63,7 @@ def wreck(x, y, tab, h):
 
 # sprawdza czy statek jest zatopiony
 
+
 def shoot(tab, ifbot=False):
     alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
@@ -76,6 +77,9 @@ def shoot(tab, ifbot=False):
 
         while True:
             data = input("Wpisz koordynaty strzalu (np. c6):\n")
+            #if data == "esc":
+                #reset() # TODO: zrobić tę funkcję
+                #break
             try:
                 y = int(data[1:])
                 x = alphabet[data[0]]
@@ -100,6 +104,14 @@ def shoot(tab, ifbot=False):
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
         a = wreck(x, y, tab, [x, y])
+        if not ifbot:
+            clearConsole()
+            if a == 0:
+                print("Okręt przeciwnika zatopiony! Oddaj kolejny strzał!\n")
+                if wygrana(bot) == 1:
+                    print("Okręt przeciwnika zatopiony!\n")
+            else:
+                print("Okręt przeciwnika trafiony! Oddaj kolejny strzał!\n")
         if a == 0:
             sunk(x, y, tab)
         else:
@@ -114,9 +126,24 @@ def shoot(tab, ifbot=False):
 
         return 1  # czy masz następny strzał
 
-
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
+        if not ifbot:
+            clearConsole()
+            print("Pudło!\n")
+
+    if ifbot:
+        global bot_shoots
+        if bot_shoots >= 2:
+            print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+        elif bot_shoots == 1:
+            print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
+        elif bot_shoots <= 0:
+            print("Przeciwnik spudłował!\n")
+
+        bot_shoots = 0
+        
+        return 0
 
     return 0
 
@@ -184,9 +211,9 @@ def player_view(oldtab):
 
 
 def welcome(pack):
-    print("Gra z losową planszą - wcisnij 1\n", "Gra z własną planszą - wcisnij 2\n", "Ustawienia - wcisnij 3\n",
-          "szybka gra - wcisnij 4")
-    num = input()
+    num = settings.print_main_menu()
+
+    tab = []
 
     if num == "1":
         i = 0
@@ -203,7 +230,6 @@ def welcome(pack):
         tab = gs.generate(pack[1], pack[0])
         if tab == 1:
             tab = welcome(pack)
-
 
     elif num == "3":
         clearConsole()
@@ -225,12 +251,17 @@ def welcome(pack):
                 i = 0
                 settings.settings(pack)
 
+    elif num == "esc":
+        exit(0)
+
     else:
         print("Proszę wybrać inny numer\n")
         tab = welcome(pack)
+
     return tab
 
 # witam
+
 
 def wygrana(tab):
     n_r = range(1, len(tab) - 1)
@@ -253,28 +284,27 @@ if __name__ == '__main__':
     while bot == 0:
         bot = gs.rand(pack[1], pack[0])
 
+    clearConsole()
     pb.print_both_boards(tab, player_view(bot))
 
     i = 0  # liczebie strzałów
+    bot_shoots = 0
 
-    while (wygrana(tab) == 0 and wygrana(bot) == 0):  # chyba można by trochę zoptymalizować z wyskakiwaniem
-        while (shoot(bot) == 1 and wygrana(bot) == 0):
-            clearConsole()
+    while wygrana(tab) == 0 and wygrana(bot) == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
+        while shoot(bot) == 1:  # Gracz trafił
             pb.print_both_boards(tab, player_view(bot))
 
-        while (shoot(tab, True) == 1 and wygrana(tab) == 0):
-            clearConsole()
-            pb.print_both_boards(tab, player_view(bot))
+        while shoot(tab, True) == 1:
+            bot_shoots += 1
 
         i = i + 1
 
-        clearConsole()
         pb.print_both_boards(tab, player_view(bot))
 
     if wygrana(tab) == 1:
-        print("Komputer wygrał w", i, "salwach\n")
+        print("Komputer wygrał w", i, "salwach!\n")
 
     if wygrana(bot) == 1:
-        print("Wygrałeś w ", i, "salwach\n Gratuluję")
+        print("Wygrałeś w ", i, "salwach!\n Gratuluję")
 
     a = input()  # nie wyłącza się od razu po końcu
