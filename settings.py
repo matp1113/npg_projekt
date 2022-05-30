@@ -10,17 +10,26 @@ def settings(pack):
             return 1
 
         elif num == '5':
-            num = int(input("Podaj rozmiar okrętu, którego liczbę chcesz zmodyfikować:\n"))
-            pack[0] = ships_change(pack[0], int(num))
-            return 1
+            try:
+                num = int(input("Podaj rozmiar okrętu, którego liczbę chcesz zmodyfikować:\n"))
+            except:
+                print("Podaj poprawną wartość!")
+                continue
+            if num <= pack[1]:
+                pack[0] = ships_change(pack[0], int(num))
+                return 1
+            else:
+                print("Statek nie może być dłuższy od krawędzi planszy!")
+                num = '6'
+                continue
 
         elif num == '6':
             while True:
-                print("Docelowa wartość:")
+                print("Docelowy rozmiar planszy: ")
                 try:
                     x = int(input())
                 except:
-                    print("Podaj poprawną warość!")
+                    print("Podaj poprawną wartość!")
                     continue
                 if x > 25:
                     print("Maksymalna dozwolona wartość to 25!")
@@ -41,7 +50,7 @@ def settings(pack):
             return 0
 
         else:
-            num = input("Podaj poprawną warość!")
+            num = input("Podaj poprawną wartość!")
             continue
 
 
@@ -61,8 +70,12 @@ def ships_change(ship, num):
         print("Obecnie ustawiona liczba statków o wielkości", num, '-', ship[num - 1])
     print("Docelowa wartość:")
 
-    new[num - 1] = int(input())
-    return (new)
+    while True:
+        try:
+            new[num - 1] = int(input())
+            return new
+        except:
+            print("Podaj poprawną wartość!")
 
 
 # zmiany liczby statków

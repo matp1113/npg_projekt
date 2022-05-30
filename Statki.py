@@ -77,7 +77,8 @@ def shoot(tab, ifbot=False):
 
         while True:
             data = input("Wpisz koordynaty strzalu (np. c6):\n")
-            #if data == "esc":
+            if data == "esc":
+                exit(0)
                 #reset() # TODO: zrobić tę funkcję
                 #break
             try:
@@ -106,12 +107,17 @@ def shoot(tab, ifbot=False):
         a = wreck(x, y, tab, [x, y])
         if not ifbot:
             clearConsole()
-            if a == 0:
+            if a == 0 and wygrana(bot) == 0:
                 print("Okręt przeciwnika zatopiony! Oddaj kolejny strzał!\n")
-                if wygrana(bot) == 1:
-                    print("Okręt przeciwnika zatopiony!\n")
+            elif wygrana(bot) == 1:
+                print("Okręt przeciwnika zatopiony!\n")
+                return 0
             else:
                 print("Okręt przeciwnika trafiony! Oddaj kolejny strzał!\n")
+
+        if ifbot and wygrana(tab) == 1:
+            return 1
+
         if a == 0:
             sunk(x, y, tab)
         else:
@@ -131,6 +137,7 @@ def shoot(tab, ifbot=False):
         if not ifbot:
             clearConsole()
             print("Pudło!\n")
+            return 0
 
     if ifbot:
         global bot_shoots
@@ -240,7 +247,7 @@ def welcome(pack):
 
     elif num == "4":
         i = 0
-        pack[0] = [3, 2, 1]
+        pack[0] = [2, 2, 1]
         pack[1] = 5
         tab = gs.rand(pack[1], pack[0])
         while tab == 0:
@@ -294,7 +301,7 @@ if __name__ == '__main__':
         while shoot(bot) == 1:  # Gracz trafił
             pb.print_both_boards(tab, player_view(bot))
 
-        while shoot(tab, True) == 1:
+        while wygrana(bot) == 0 and wygrana(tab) == 0 and shoot(tab, True) == 1:  # Bot trafił
             bot_shoots += 1
 
         i = i + 1
@@ -303,8 +310,14 @@ if __name__ == '__main__':
 
     if wygrana(tab) == 1:
         print("Komputer wygrał w", i, "salwach!\n")
+        pb.print_both_boards(tab, bot)
 
     if wygrana(bot) == 1:
-        print("Wygrałeś w ", i, "salwach!\n Gratuluję")
+        print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
+        pb.print_both_boards(tab, bot)
+    
+    a = ''
+    while a != 'esc':
+        a = input("\n\nWpisz esc, aby zamknąć program\n")  # nie wyłącza się od razu po końcu
 
-    a = input()  # nie wyłącza się od razu po końcu
+    exit(0)
