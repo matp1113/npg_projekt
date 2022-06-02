@@ -15,11 +15,11 @@ def settings(pack):
             except:
                 print("Podaj poprawną wartość!")
                 continue
-            if num <= pack[1]:
+            if num < pack[1]:
                 pack[0] = ships_change(pack[0], int(num))
                 return 1
             else:
-                print("Statek nie może być dłuższy od krawędzi planszy!")
+                print("Statek musi być krótszy od krawędzi planszy!")
                 num = '6'
                 continue
 
@@ -34,7 +34,7 @@ def settings(pack):
                 if x > 25:
                     print("Maksymalna dozwolona wartość to 25!")
                     continue
-                if x <= 2:
+                if x <= 1:
                     print("Za mała wartość")
                     continue
                 pack[1] = x
@@ -117,4 +117,6 @@ def print_settings(pack):
           "{:<50} wpisz esc\n".format("Powrót do głównego menu.").replace("  ", " ."))
 
     return input()
+
+
 

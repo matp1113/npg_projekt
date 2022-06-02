@@ -123,8 +123,9 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
             a = 2
 
             pb.print_board(tab)
+            print("Wybierz pozycję dla okrętu o długości " + str(j) + ":\n")
             while True:
-                data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\n Powrót - wpisz esc\n")
+                data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\nPowrót - wpisz esc\n")
                 if data == "esc":
                     return 1
                 try:

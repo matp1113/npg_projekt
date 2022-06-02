@@ -4,6 +4,7 @@
     <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="własna plansza i lepsze wyświetlanie">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Statki.py" beforeDir="false" afterPath="$PROJECT_DIR$/Statki.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateships.py" beforeDir="false" afterPath="$PROJECT_DIR$/generateships.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

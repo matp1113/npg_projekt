@@ -79,8 +79,6 @@ def shoot(tab, ifbot=False):
             data = input("Wpisz koordynaty strzalu (np. c6):\n")
             if data == "esc":
                 exit(0)
-                #reset() # TODO: zrobić tę funkcję
-                #break
             try:
                 y = int(data[1:])
                 x = alphabet[data[0]]
@@ -102,6 +100,8 @@ def shoot(tab, ifbot=False):
         x = target[1]
         y = target[0]
 
+    global bot_shoots
+
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
         a = wreck(x, y, tab, [x, y])
@@ -116,6 +116,11 @@ def shoot(tab, ifbot=False):
                 print("Okręt przeciwnika trafiony! Oddaj kolejny strzał!\n")
 
         if ifbot and wygrana(tab) == 1:
+            if bot_shoots >= 2:
+                print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+            elif bot_shoots == 1:
+                print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
+            pb.print_both_boards(tab, bot)
             return 1
 
         if a == 0:
@@ -140,7 +145,6 @@ def shoot(tab, ifbot=False):
             return 0
 
     if ifbot:
-        global bot_shoots
         if bot_shoots >= 2:
             print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
         elif bot_shoots == 1:
@@ -221,50 +225,66 @@ def welcome(pack):
     num = settings.print_main_menu()
 
     tab = []
-
-    if num == "1":
-        i = 0
-        tab = gs.rand(pack[1], pack[0])
-        while tab == 0:
+    i = 0
+    while True:
+        if num == "1":
+            i = 0
             tab = gs.rand(pack[1], pack[0])
-            i = i + 1
-            if i > 1000000:  # maks milion powtórzeń
+            while tab == 0:
+                tab = gs.rand(pack[1], pack[0])
+                i = i + 1
+                if i > 1000000:  # maks milion powtórzeń
+                    clearConsole()
+                    num = "3"
+                    break
+            if tab != 0:
+                break
+    
+        elif num == "2":
+            tab = gs.generate(pack[1], pack[0])
+            if tab == 1:
+                num = settings.print_main_menu()
+            else:
+                break
+    
+        elif num == "3":
+            if i > 1000000:
                 print("Proszę o lepsze ustawienia!\n")
                 i = 0
-                settings.settings(pack)
-
-    elif num == "2":
-        tab = gs.generate(pack[1], pack[0])
-        if tab == 1:
-            tab = welcome(pack)
-
-    elif num == "3":
-        clearConsole()
-        while settings.settings(pack) != 0:
+            else:
+                clearConsole()
+            while settings.settings(pack) != 0:
+                clearConsole()
             clearConsole()
-        clearConsole()
-        tab = welcome(pack)
-
-    elif num == "4":
-        i = 0
-        pack[0] = [2, 2, 1]
-        pack[1] = 5
-        tab = gs.rand(pack[1], pack[0])
-        while tab == 0:
+            num = settings.print_main_menu()
+    
+        elif num == "4":
+            i = 0
+            pack[0] = [2, 2, 1]
+            pack[1] = 5
             tab = gs.rand(pack[1], pack[0])
-            i = i + 1
-            if i > 1000000:  # maks milion powtórzeń
-                print("Proszę o lepsze ustawienia!\n")
-                i = 0
-                settings.settings(pack)
+            while tab == 0:
+                tab = gs.rand(pack[1], pack[0])
+                i = i + 1
+                if i > 1000000:  # maks milion powtórzeń
+                    print("Proszę o lepsze ustawienia!\n")
+                    i = 0
+                    num = "3"
+                    break
+                    
+        # elif num == "5":
+        #     settings.
+        #     num = settings.print_main_menu()
+    
+        elif num == "esc":
+            exit(0)
+    
+        else:
+            print("Proszę wybrać inny numer\n")
+            num = input()
 
-    elif num == "esc":
-        exit(0)
-
-    else:
-        print("Proszę wybrać inny numer\n")
-        tab = welcome(pack)
-
+        clearConsole()
+        
     return tab
 
 # witam
@@ -310,11 +330,9 @@ if __name__ == '__main__':
 
     if wygrana(tab) == 1:
         print("Komputer wygrał w", i, "salwach!\n")
-        pb.print_both_boards(tab, bot)
 
     if wygrana(bot) == 1:
         print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
-        pb.print_both_boards(tab, bot)
     
     a = ''
     while a != 'esc':
