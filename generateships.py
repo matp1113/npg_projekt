@@ -5,22 +5,22 @@ import printboard as pb
 def twist(x, y, l, n):
     tab = []
 
-    if (1 < x + l < n + 1):
+    if 1 < x + l < n + 1:
         tab.append([l, 0])
 
-    if (1 < x - l < n + 1):
+    if 1 < x - l < n + 1:
         tab.append([-l, 0])
 
-    if (1 < y + l < n + 1):
+    if 1 < y + l < n + 1:
         tab.append([0, l])
 
-    if (0 < y - l < n + 1):
+    if 0 < y - l < n + 1:
         tab.append([0, -l])
 
     if len(tab) == 0:
-        return (0)
+        return 0
 
-    return (random.choice(tab))  # losowa strona wylosowana z tabeli
+    return random.choice(tab)  # losowa strona wylosowana z tabeli
 
 
 # sprawdza czy możliwe jest obrócenie statku o długości l i zwraca tablie z możliwymi obrotami
@@ -35,36 +35,36 @@ def rand(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wymiar
             y = random.randint(1, n)
 
             if check(x, y, tab) == 0:
-                return (0)
+                return 0
 
             if j > 1:
                 dir = twist(x, y, j, n)
 
                 if dir == 0:
-                    return (0)
+                    return 0
 
-                if (dir[0] > 0):  # sprawdzenie w którą stronę wylosowało
+                if dir[0] > 0:  # sprawdzenie w którą stronę wylosowało
                     for a in range(1, j):
                         if check(x + a, y, tab, [x + a - 1, y]) == 0:
-                            return (0)
+                            return 0
                         tab[y][x + a] = '■'
 
-                if (dir[0] < 0):
+                if dir[0] < 0:
                     for a in range(1, j):
                         if check(x - a, y, tab, [x - a + 1, y]) == 0:
-                            return (0)
+                            return 0
                         tab[y][x - a] = '■'
 
-                if (dir[1] > 0):
+                if dir[1] > 0:
                     for a in range(1, j):
                         if check(x, y + a, tab, [x, y + a - 1]) == 0:
-                            return (0)
+                            return 0
                         tab[y + a][x] = '■'
 
-                if (dir[1] < 0):
+                if dir[1] < 0:
                     for a in range(1, j):
                         if check(x, y - a, tab, [x, y - a + 1]) == 0:
-                            return (0)
+                            return 0
                         tab[y - a][x] = '■'
 
             tab[y][x] = '■'
@@ -91,7 +91,7 @@ def create(n):
         tab[n - 1][j] = ' '
         tab[0][n - 1] = ' '
 
-    return (tab)
+    return tab
 
 
 # tworzy plansze z obramowaniem
@@ -121,6 +121,8 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
     while j > 0:
         for i in range(0, ship[j - 1]):  # liczba statków
             a = 2
+            x = 0
+            y = 0
 
             pb.print_board(tab)
             print("Wybierz pozycję dla okrętu o długości " + str(j) + ":\n")

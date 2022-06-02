@@ -39,7 +39,7 @@ def check(x, y, tab, h=[0, 0]):
 def wreck(x, y, tab, h):
     a = 0  # funkcja sumuje jedynki wszystko musi zwracać zera by okęt był zatopiony
     if check(x, y, tab, h) != 1:
-        return (1)
+        return 1
 
     ini = tab[h[1]][h[0]]
     tab[h[1]][h[0]] = 'wreck podmiana'  # zmienia wartośćaby schodząc w dół aby sie nie zapętlał
@@ -68,17 +68,19 @@ def shoot(tab, ifbot=False):
     alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
                 'm': 13, 'n': 14, 'o': 15, 'p': 16,
                 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
+    y = 0
+    x = 0
 
-    if (ifbot == False):
-        y = 0
-        x = 0
+    if not ifbot:
         size = len(tab) - 1
         n_r = range(1, size)
 
         while True:
             data = input("Wpisz koordynaty strzalu (np. c6):\n")
             if data == "esc":
-                exit(0)
+                global running
+                running = False
+                return 0
             try:
                 y = int(data[1:])
                 x = alphabet[data[0]]
@@ -95,7 +97,7 @@ def shoot(tab, ifbot=False):
                 print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
                 continue
 
-    elif (ifbot == True):
+    elif ifbot:
         target = where_to_shoot(tab)
         x = target[1]
         y = target[0]
@@ -168,7 +170,7 @@ def where_to_shoot(tab):
     size = len(tab)
     n_r = range(1, size)
 
-    while (tab[y][x] != '□' and tab[y][x] != '■'):
+    while tab[y][x] != '□' and tab[y][x] != '■':
         x = random.randint(1, size - 1)
         y = random.randint(1, size - 1)
 
@@ -178,26 +180,26 @@ def where_to_shoot(tab):
 
                 if tab[q + 1][w] == "⛝" or tab[q - 1][w] == "⛝":
                     if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
-                        return ([q + 1, w])
+                        return [q + 1, w]
                     elif tab[q - 1][w] == '□' or tab[q - 1][w] == '■':
-                        return ([q - 1, w])
+                        return [q - 1, w]
 
                 elif tab[q][w + 1] == "⛝" or tab[q][w - 1] == "⛝":
                     if tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
-                        return ([q, w + 1])
+                        return [q, w + 1]
                     elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
-                        return ([q, w - 1])
+                        return [q, w - 1]
 
                 if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
-                    return ([q + 1, w])
+                    return [q + 1, w]
                 elif tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
-                    return ([q, w + 1])
+                    return [q, w + 1]
                 elif tab[q - 1][w] == '□' or tab[q - 1][w] == '■':
-                    return ([q - 1, w])
+                    return [q - 1, w]
                 elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
-                    return ([q, w - 1])
+                    return [q, w - 1]
 
-    return ([y, x])
+    return [y, x]
 
 # wybiera gdzie bot strzeli
 
@@ -225,7 +227,6 @@ def player_view(oldtab):
 def welcome(pack):
     num = settings.print_main_menu()
 
-    tab = []
     i = 0
     while True:
         if num == "1":
@@ -275,11 +276,12 @@ def welcome(pack):
             if tab != 0:
                 break
                 
-                    
         elif num == "5":
+            clearConsole()
             data = ''
             while data != 'esc':
                 data = settings.print_rules()
+            clearConsole()
             num = settings.print_main_menu()
     
         elif num == "esc":
@@ -308,38 +310,52 @@ if __name__ == '__main__':
     ship = [4, 3, 2, 1]
     size = 10  # rozmiar
     pack = [ship, size]  # zrobione jak wskaznik by settings miało dostęp
-
-    tab = welcome(pack)
-
-    bot = gs.rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
-    while bot == 0:
-        bot = gs.rand(pack[1], pack[0])
-
-    clearConsole()
-    pb.print_both_boards(tab, player_view(bot))
-
-    i = 0  # liczebie strzałów
-    bot_shoots = 0
-
-    while wygrana(tab) == 0 and wygrana(bot) == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
-        while shoot(bot) == 1:  # Gracz trafił
-            pb.print_both_boards(tab, player_view(bot))
-
-        while wygrana(bot) == 0 and wygrana(tab) == 0 and shoot(tab, True) == 1:  # Bot trafił
-            bot_shoots += 1
-
-        i = i + 1
-
-        pb.print_both_boards(tab, player_view(bot))
-
-    if wygrana(tab) == 1:
-        print("Komputer wygrał w", i, "salwach!\n")
-
-    if wygrana(bot) == 1:
-        print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
+    running = True
     
-    a = ''
-    while a != 'esc':
-        a = input("\n\nWpisz esc, aby zamknąć program\n")  # nie wyłącza się od razu po końcu
+    while running:
+        tab = welcome(pack)
+    
+        bot = gs.rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
+        while bot == 0:
+            bot = gs.rand(pack[1], pack[0])
+    
+        clearConsole()
+        pb.print_both_boards(tab, player_view(bot))
+    
+        i = 0  # liczebie strzałów
+        bot_shoots = 0
+    
+        while wygrana(tab) == 0 and wygrana(bot) == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
+            while shoot(bot) == 1:  # Gracz trafił
+                pb.print_both_boards(tab, player_view(bot))
+
+            if not running:
+                break
+    
+            while wygrana(bot) == 0 and wygrana(tab) == 0 and shoot(tab, True) == 1:  # Bot trafił
+                bot_shoots += 1
+    
+            i = i + 1
+    
+            pb.print_both_boards(tab, player_view(bot))
+        if not running:
+            running = True
+            continue
+    
+        if wygrana(tab) == 1:
+            print("Komputer wygrał w", i, "salwach!\n")
+    
+        if wygrana(bot) == 1:
+            print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
+        
+        a = ''
+        while a != 'esc' and a != 'reset':
+            a = input("\n\nWpisz reset, aby zagrać od nowa.\nWpisz esc, aby zamknąć program.\n\n")
+            # nie wyłącza się od razu po końcu
+        if a == 'esc':
+            break
+        if a == 'reset':
+            clearConsole()
+            continue
 
     exit(0)

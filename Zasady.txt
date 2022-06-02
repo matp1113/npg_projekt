@@ -15,6 +15,7 @@ Menu Glowne:
 		 1 statek o dlugosci 3, 2 o dlugosci 2 i 2 o dlugosci 1.
 - Aby wyjsc z Gry wpisz esc w Menu Glownym
 
+Aby wyjsc do menu glownego w czasie trwania rozgrywki, wpisz esc w momencie wyboru pola do strzalu
 
 
 Wpisz esc, aby wrocic do Menu Glownego.
