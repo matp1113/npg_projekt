@@ -105,6 +105,19 @@ def shoot(tab, ifbot=False):
     if tab[y][x] == '■':
         tab[y][x] = '⛝'
         a = wreck(x, y, tab, [x, y])
+
+        if a == 0:
+            sunk(x, y, tab)
+        else:
+            if tab[y - 1][x - 1] == '□':
+                tab[y - 1][x - 1] = 'x'
+            if tab[y - 1][x + 1] == '□':
+                tab[y - 1][x + 1] = 'x'
+            if tab[y + 1][x - 1] == '□':
+                tab[y + 1][x - 1] = 'x'
+            if tab[y + 1][x + 1] == '□':
+                tab[y + 1][x + 1] = 'x'
+                
         if not ifbot:
             clearConsole()
             if a == 0 and wygrana(bot) == 0:
@@ -122,18 +135,6 @@ def shoot(tab, ifbot=False):
                 print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
             pb.print_both_boards(tab, bot)
             return 1
-
-        if a == 0:
-            sunk(x, y, tab)
-        else:
-            if tab[y - 1][x - 1] == '□':
-                tab[y - 1][x - 1] = 'x'
-            if tab[y - 1][x + 1] == '□':
-                tab[y - 1][x + 1] = 'x'
-            if tab[y + 1][x - 1] == '□':
-                tab[y + 1][x - 1] = 'x'
-            if tab[y + 1][x + 1] == '□':
-                tab[y + 1][x + 1] = 'x'
 
         return 1  # czy masz następny strzał
 
@@ -271,6 +272,9 @@ def welcome(pack):
                     i = 0
                     num = "3"
                     break
+            if tab != 0:
+                break
+                
                     
         elif num == "5":
             data = ''
@@ -284,8 +288,6 @@ def welcome(pack):
         else:
             print("Proszę wybrać inny numer\n")
             num = input()
-
-        clearConsole()
         
     return tab
 
