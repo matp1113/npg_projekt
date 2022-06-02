@@ -272,9 +272,11 @@ def welcome(pack):
                     num = "3"
                     break
                     
-        # elif num == "5":
-        #     settings.
-        #     num = settings.print_main_menu()
+        elif num == "5":
+            data = ''
+            while data != 'esc':
+                data = settings.print_rules()
+            num = settings.print_main_menu()
     
         elif num == "esc":
             exit(0)

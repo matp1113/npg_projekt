@@ -119,4 +119,12 @@ def print_settings(pack):
     return input()
 
 
+def print_rules():
+    print("{:^98}".format("ZASADY GRY") + '\n' + 98 * '=' + '\n')
+    with open("Zasady.txt", 'r') as zasady:
+        tekst = zasady.read()
+        print(tekst)
+    
+    return input()
+
 

@@ -1,0 +1,20 @@
+	Gra polega na umieszczeniu przez gracza na kwadratowej planszy o dowolnym rozmiarze,
+mieszczacym sie w zakresie 2 - 25, statkow w roznych rozmiarach. Ich liczbe i dlugosci mozna
+dobrac dowolnie w zakladce "Ustawienia". Statki na planszy nie moga stykac sie bokami, ani rogami.
+Gracz walczy z przeciwnikiem, sterowanym przez komputer, przez naprzemienne wybieranie pola,
+w celu jego ostrzalania. Po kazdym trafieniu, natychmiastowo, mozna oddac kolejny strzal.
+Gra konczy sie gdy wszystkie statki jednej ze stron zostana zniszczone.
+
+Menu Glowne:
+- Po wybraniu 1, gra tworzy plansze z losowo umieszczonymi na niej stakami
+- Po wybraniu 2, gracz moze sam, recznie ustawic wszystkie statki na planszy
+- Po wybraniu 3, nastepuje przejscie do Ustawien
+- Po wybraniu 4, uruchomiona zostaje "Szybka gra", czyli gra z losowym rozlozeniem statkow
+		 na planszy o rozmiarze 5.
+		 Rozmiary statkow w "Szybkiej grze":
+		 1 statek o dlugosci 3, 2 o dlugosci 2 i 2 o dlugosci 1.
+- Aby wyjsc z Gry wpisz esc w Menu Glownym
+
+
+
+Wpisz esc, aby wrocic do Menu Glownego.
