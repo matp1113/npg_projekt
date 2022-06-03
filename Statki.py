@@ -80,6 +80,7 @@ def shoot(tab, ifbot=False):
             if data == "esc":
                 global running
                 running = False
+                clearConsole()
                 return 0
             try:
                 y = int(data[1:])
@@ -328,24 +329,34 @@ if __name__ == '__main__':
             bot = gs.rand(pack[1], pack[0])
     
         clearConsole()
-        pb.print_both_boards(tab, player_view(bot))
     
         i = 0  # liczebie strzałów
         bot_shoots = 0
+
+        first_shoot = random.randint(0, 1)
+        if first_shoot == 0:
+            pb.print_both_boards(tab, player_view(bot))
+            print("Rozpoczynasz!\n")
+        else:
+            print("Przeciwnik rozpoczął!\n")
     
         while wygrana(tab) == 0 and wygrana(bot) == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
-            while shoot(bot) == 1:  # Gracz trafił
-                pb.print_both_boards(tab, player_view(bot))
+            if first_shoot != 1:
+                while shoot(bot) == 1:  # Gracz trafił
+                    pb.print_both_boards(tab, player_view(bot))
 
             if not running:
                 break
     
             while wygrana(bot) == 0 and wygrana(tab) == 0 and shoot(tab, True) == 1:  # Bot trafił
                 bot_shoots += 1
-    
+
             i = i + 1
-    
+            if first_shoot == 1:
+                first_shoot = 0
+
             pb.print_both_boards(tab, player_view(bot))
+
         if not running:
             running = True
             continue
