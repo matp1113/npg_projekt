@@ -37,6 +37,14 @@ def settings(pack):
                 if x <= 1:
                     print("Za mała wartość")
                     continue
+                longest_ship = 0
+                for i in range(len(pack[0]) - 1, 0, -1):
+                    if pack[0][i] != 0:
+                        longest_ship = i + 1
+                        break
+                if x <= longest_ship:
+                    print("Bok planszy musi być dłuższy od największego statku!")
+                    continue
                 pack[1] = x
                 break
             return 1

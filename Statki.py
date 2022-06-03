@@ -231,6 +231,11 @@ def welcome(pack):
     while True:
         if num == "1":
             i = 0
+            if False if False in [el == 0 for el in pack[0]] else True:
+                clearConsole()
+                num = "3"
+                i = -1
+                continue
             tab = gs.rand(pack[1], pack[0])
             while tab == 0:
                 tab = gs.rand(pack[1], pack[0])
@@ -252,6 +257,9 @@ def welcome(pack):
         elif num == "3":
             if i > 1000000:
                 print("Proszę o lepsze ustawienia!\n")
+                i = 0
+            elif i == -1:
+                print("Proszę wybrać rozmiary statków!\n")
                 i = 0
             else:
                 clearConsole()
