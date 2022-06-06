@@ -120,7 +120,7 @@ def shoot(tab, ifbot=False):
                 tab[y + 1][x - 1] = 'x'
             if tab[y + 1][x + 1] == '□':
                 tab[y + 1][x + 1] = 'x'
-                
+
         if not ifbot:
             clearConsole()
             if a == 0 and wygrana(bot) == 0:
@@ -157,7 +157,7 @@ def shoot(tab, ifbot=False):
             print("Przeciwnik spudłował!\n")
 
         bot_shoots = 0
-        
+
         return 0
 
     return 0
@@ -245,10 +245,13 @@ def welcome(pack):
                     clearConsole()
                     num = "3"
                     break
-            if tab != 0:
-                break
+            print("Wylosowana dla Ciebie plansza:\n")
+            pb.print_board(tab)
+            input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
+            break
     
         elif num == "2":
+            clearConsole()
             tab = gs.generate(pack[1], pack[0])
             if tab == 1:
                 num = settings.print_main_menu()
@@ -282,8 +285,10 @@ def welcome(pack):
                     i = 0
                     num = "3"
                     break
-            if tab != 0:
-                break
+            print("Wylosowana dla Ciebie plansza:\n")
+            pb.print_board(tab)
+            input("Wpisz dowolną wartość, aby rozopocząć grę.\n")
+            break
                 
         elif num == "5":
             clearConsole()

@@ -129,6 +129,7 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
             while True:
                 data = input("Wpisz koordynaty pierwszej komórki statku (np. c6):\nPowrót - wpisz esc\n")
                 if data == "esc":
+                    pb.clear_console()
                     return 1
                 try:
                     y = int(data[1:])
@@ -149,10 +150,14 @@ def generate(n, ship):  # n wymiar planszy, ship liczba statków o konkretnym wy
             if j > 1:
                 while a != 0:
                     data = input("Wpisz stronę w którą ma się obrócić okręt(↑:w, ←:a, ↓:s, →:d):\n")
+                    if data == 'esc':
+                        pb.clear_console()
+                        return 1
                     a = multiple_check(x, y, j, data, tab, n)
                     if a == 1:
                         print("Kierunek podany nieprawidlowo! Sprobuj ponownie:")
                 multiple_check(x, y, j, data, tab, n, 1)
+                pb.clear_console()
 
             tab[y][x] = '■'
         j = j - 1
