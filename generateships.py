@@ -5,16 +5,16 @@ import printboard as pb
 def twist(x, y, l, n):
     tab = []
 
-    if 1 < x + l < n + 1:
+    if 0 <= x + l <= n + 1:
         tab.append([l, 0])
 
-    if 1 < x - l < n + 1:
+    if 0 <= x - l <= n + 1:
         tab.append([-l, 0])
 
-    if 1 < y + l < n + 1:
+    if 0 <= y + l <= n + 1:
         tab.append([0, l])
 
-    if 0 < y - l < n + 1:
+    if 0 <= y - l <= n + 1:
         tab.append([0, -l])
 
     if len(tab) == 0:

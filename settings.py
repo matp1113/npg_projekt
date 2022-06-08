@@ -15,13 +15,19 @@ def settings(pack):
             except:
                 print("Podaj poprawną wartość!")
                 continue
-            if num < pack[1]:
-                pack[0] = ships_change(pack[0], int(num))
-                return 1
-            else:
-                print("Statek musi być krótszy od krawędzi planszy!")
+
+            if num > pack[1]:
+                print("Statek nie może być dłuższy od krawędzi planszy!")
                 num = '6'
                 continue
+            elif num <= 0:
+                print("Statek musi mieć długość większą od 0!")
+                num = '5'
+                continue
+            else:
+                pack[0] = ships_change(pack[0], int(num))
+                return 1
+
 
         elif num == '6':
             while True:
@@ -42,8 +48,8 @@ def settings(pack):
                     if pack[0][i] != 0:
                         longest_ship = i + 1
                         break
-                if x <= longest_ship:
-                    print("Bok planszy musi być dłuższy od największego statku!")
+                if x < longest_ship:
+                    print("Bok planszy musi być co najmniej tak długi jak największy statek!")
                     continue
                 pack[1] = x
                 break
