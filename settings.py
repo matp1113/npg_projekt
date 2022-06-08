@@ -64,7 +64,7 @@ def settings(pack):
             return 0
 
         else:
-            num = input("Podaj poprawną wartość!")
+            num = input("Podaj poprawną wartość!\n")
             continue
 
 
@@ -138,6 +138,12 @@ def print_rules():
     with open("Zasady.txt", 'r') as zasady:
         tekst = zasady.read()
         print(tekst)
+    print("\nOznaczenia na planszy:\n" +
+          " □ - puste lub niewidoczne pole\n" +
+          " ■ - pole, na ktorym znajduje sie twoj statek\n" +
+          " ░ - pole, na ktorym znajduje sie trafiony statek\n" +
+          " x - pole, w ktore oddano niecelny strzal\n\n\n" +
+          "Wpisz esc, aby wrocic do Menu Glownego")
     
     return input()
 
