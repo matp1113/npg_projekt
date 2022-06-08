@@ -358,7 +358,6 @@ if __name__ == '__main__':
 
             if first_shoot != 1:
                 while wb == 0 and wt == 0 and shoot(bot) == 1:  # Gracz trafił
-                    print (wb, wt)
                     wb = wygrana(bot)
                     pb.print_both_boards(tab, player_view(bot))
 
