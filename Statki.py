@@ -349,16 +349,27 @@ if __name__ == '__main__':
             print("Rozpoczynasz!\n")
         else:
             print("Przeciwnik rozpoczął!\n")
-    
-        while wygrana(tab) == 0 and wygrana(bot) == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
+
+
+        wt = 0
+        wb = 0
+
+        while wt == 0 and wb == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
+
             if first_shoot != 1:
-                while shoot(bot) == 1:  # Gracz trafił
+                while wb == 0 and wt == 0 and shoot(bot) == 1:  # Gracz trafił
+                    print (wb, wt)
+                    wb = wygrana(bot)
                     pb.print_both_boards(tab, player_view(bot))
+
+
+            wb = wygrana(bot) #idk dlaczego ale musi tu być
 
             if not running:
                 break
     
-            while wygrana(bot) == 0 and wygrana(tab) == 0 and shoot(tab, True) == 1:  # Bot trafił
+            while wb == 0 and wt == 0 and shoot(tab, True) == 1:  # Bot trafił
+                wt = wygrana(tab)
                 bot_shoots += 1
 
             i = i + 1
@@ -371,10 +382,10 @@ if __name__ == '__main__':
             running = True
             continue
     
-        if wygrana(tab) == 1:
+        if wt == 1:
             print("Komputer wygrał w", i, "salwach!\n")
     
-        if wygrana(bot) == 1:
+        if wb == 1:
             print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
         
         a = ''
