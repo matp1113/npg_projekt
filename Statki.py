@@ -127,17 +127,10 @@ def shoot(tab, ifbot=False):
                 print("Okręt przeciwnika zatopiony! Oddaj kolejny strzał!\n")
             elif wygrana(bot) == 1:
                 print("Okręt przeciwnika zatopiony!\n")
-                return 0
+                return 1
             else:
                 print("Okręt przeciwnika trafiony! Oddaj kolejny strzał!\n")
 
-        if ifbot and wygrana(tab) == 1:
-            if bot_shoots >= 2:
-                print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
-            elif bot_shoots == 1:
-                print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
-            pb.print_both_boards(tab, bot)
-            return 1
 
         return 1  # czy masz następny strzał
 
@@ -361,9 +354,6 @@ if __name__ == '__main__':
                     wb = wygrana(bot)
                     pb.print_both_boards(tab, player_view(bot))
 
-
-            wb = wygrana(bot) #idk dlaczego ale musi tu być
-
             if not running:
                 break
     
@@ -395,6 +385,8 @@ if __name__ == '__main__':
             break
         if a == 'reset':
             pb.clear_console()
+            pack[0] = [4, 3, 2, 1]
+            pack[1] = 10
             continue
 
     exit(0)
