@@ -45,7 +45,7 @@ def wreck(x, y, tab, h):
     tab[h[1]][h[0]] = 'wreck podmiana'  # zmienia wartośćaby schodząc w dół aby sie nie zapętlał
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
-            if tab[j][i] == '⛝':
+            if tab[j][i] == '░':
                 a = a + wreck(i, j, tab, [i, j])
 
     if a != 0:
@@ -54,7 +54,7 @@ def wreck(x, y, tab, h):
 
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
-            if tab[j][i] == '⛝':
+            if tab[j][i] == '░':
                 sunk(i, j, tab)
 
     tab[h[1]][h[0]] = ini  # przywraca wartość orginalną
@@ -80,7 +80,7 @@ def shoot(tab, ifbot=False):
             if data == "esc":
                 global running
                 running = False
-                clearConsole()
+                pb.clear_console()
                 return 0
             try:
                 y = int(data[1:])
@@ -89,7 +89,7 @@ def shoot(tab, ifbot=False):
                 print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
                 continue
             if x in n_r and y in n_r:
-                if tab[y][x] == 'x' or tab[y][x] == '⛝':
+                if tab[y][x] == 'x' or tab[y][x] == '░':
                     print("W podane pole oddano już strzal! Sprobuj ponownie:")
                     continue
                 else:
@@ -106,7 +106,7 @@ def shoot(tab, ifbot=False):
     global bot_shoots
 
     if tab[y][x] == '■':
-        tab[y][x] = '⛝'
+        tab[y][x] = '░'
         a = wreck(x, y, tab, [x, y])
 
         if a == 0:
@@ -122,7 +122,7 @@ def shoot(tab, ifbot=False):
                 tab[y + 1][x + 1] = 'x'
 
         if not ifbot:
-            clearConsole()
+            pb.clear_console()
             if a == 0 and wygrana(bot) == 0:
                 print("Okręt przeciwnika zatopiony! Oddaj kolejny strzał!\n")
             elif wygrana(bot) == 1:
@@ -144,7 +144,7 @@ def shoot(tab, ifbot=False):
     elif tab[y][x] == '□':
         tab[y][x] = 'x'
         if not ifbot:
-            clearConsole()
+            pb.clear_console()
             print("Pudło!\n")
             return 0
 
@@ -177,15 +177,15 @@ def where_to_shoot(tab):
 
     for q in n_r:
         for w in n_r:
-            if tab[q][w] == "⛝":
+            if tab[q][w] == '░':
 
-                if tab[q + 1][w] == "⛝" or tab[q - 1][w] == "⛝":
+                if tab[q + 1][w] == '░' or tab[q - 1][w] == '░':
                     if tab[q + 1][w] == '□' or tab[q + 1][w] == '■':
                         return [q + 1, w]
                     elif tab[q - 1][w] == '□' or tab[q - 1][w] == '■':
                         return [q - 1, w]
 
-                elif tab[q][w + 1] == "⛝" or tab[q][w - 1] == "⛝":
+                elif tab[q][w + 1] == '░' or tab[q][w - 1] == '░':
                     if tab[q][w + 1] == '□' or tab[q][w + 1] == '■':
                         return [q, w + 1]
                     elif tab[q][w - 1] == '□' or tab[q][w - 1] == '■':
@@ -229,11 +229,12 @@ def welcome(pack):
     num = settings.print_main_menu()
 
     i = 0
+    tab = []
     while True:
         if num == "1":
             i = 0
             if False if False in [el == 0 for el in pack[0]] else True:
-                clearConsole()
+                pb.clear_console()
                 num = "3"
                 i = -1
                 continue
@@ -242,16 +243,18 @@ def welcome(pack):
                 tab = gs.rand(pack[1], pack[0])
                 i = i + 1
                 if i > 1000000:  # maks milion powtórzeń
-                    clearConsole()
+                    pb.clear_console()
                     num = "3"
                     break
-            print("Wylosowana dla Ciebie plansza:\n")
-            pb.print_board(tab)
-            input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
-            break
+            if tab != 0:
+                pb.clear_console()
+                print("Wylosowana dla Ciebie plansza:\n")
+                pb.print_board(tab)
+                input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
+                break
     
         elif num == "2":
-            clearConsole()
+            pb.clear_console()
             tab = gs.generate(pack[1], pack[0])
             if tab == 1:
                 num = settings.print_main_menu()
@@ -266,10 +269,10 @@ def welcome(pack):
                 print("Proszę wybrać rozmiary statków!\n")
                 i = 0
             else:
-                clearConsole()
+                pb.clear_console()
             while settings.settings(pack) != 0:
-                clearConsole()
-            clearConsole()
+                pb.clear_console()
+            pb.clear_console()
             num = settings.print_main_menu()
     
         elif num == "4":
@@ -285,17 +288,19 @@ def welcome(pack):
                     i = 0
                     num = "3"
                     break
-            print("Wylosowana dla Ciebie plansza:\n")
-            pb.print_board(tab)
-            input("Wpisz dowolną wartość, aby rozopocząć grę.\n")
-            break
+            if tab != 0:
+                pb.clear_console()
+                print("Wylosowana dla Ciebie plansza:\n")
+                pb.print_board(tab)
+                input("Wpisz dowolną wartość, aby rozopocząć grę.\n")
+                break
                 
         elif num == "5":
-            clearConsole()
+            pb.clear_console()
             data = ''
             while data != 'esc':
                 data = settings.print_rules()
-            clearConsole()
+            pb.clear_console()
             num = settings.print_main_menu()
     
         elif num == "esc":
@@ -333,7 +338,7 @@ if __name__ == '__main__':
         while bot == 0:
             bot = gs.rand(pack[1], pack[0])
     
-        clearConsole()
+        pb.clear_console()
     
         i = 0  # liczebie strzałów
         bot_shoots = 0
@@ -379,7 +384,7 @@ if __name__ == '__main__':
         if a == 'esc':
             break
         if a == 'reset':
-            clearConsole()
+            pb.clear_console()
             continue
 
     exit(0)
