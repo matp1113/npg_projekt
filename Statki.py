@@ -131,7 +131,6 @@ def shoot(tab, ifbot=False):
             else:
                 print("Okręt przeciwnika trafiony! Oddaj kolejny strzał!\n")
 
-
         return 1  # czy masz następny strzał
 
     elif tab[y][x] == '□':
@@ -140,18 +139,17 @@ def shoot(tab, ifbot=False):
             pb.clear_console()
             print("Pudło!\n")
             return 0
+        else:
+            if bot_shoots >= 2:
+                print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+            elif bot_shoots == 1:
+                print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
+            elif bot_shoots <= 0:
+                print("Przeciwnik spudłował!\n")
 
-    if ifbot:
-        if bot_shoots >= 2:
-            print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
-        elif bot_shoots == 1:
-            print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
-        elif bot_shoots <= 0:
-            print("Przeciwnik spudłował!\n")
+            bot_shoots = 0
 
-        bot_shoots = 0
-
-        return 0
+            return 0
 
     return 0
 
@@ -243,7 +241,7 @@ def welcome(pack):
                 pb.clear_console()
                 print("Wylosowana dla Ciebie plansza:\n")
                 pb.print_board(tab)
-                input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
+                input("Naciśnij Enter, aby rozopocząć grę.\n")
                 break
     
         elif num == "2":
@@ -285,7 +283,7 @@ def welcome(pack):
                 pb.clear_console()
                 print("Wylosowana dla Ciebie plansza:\n")
                 pb.print_board(tab)
-                input("Wpisz dowolną wartość, aby rozopocząć grę.\n")
+                input("Naciśnij Enter, aby rozopocząć grę.\n")
                 break
                 
         elif num == "5":
@@ -343,9 +341,8 @@ if __name__ == '__main__':
         else:
             print("Przeciwnik rozpoczął!\n")
 
-
-        wt = 0
-        wb = 0
+        wt = 0  # Bot wygrał
+        wb = 0  # Gracz wygrał
 
         while wt == 0 and wb == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
 
@@ -365,17 +362,20 @@ if __name__ == '__main__':
             if first_shoot == 1:
                 first_shoot = 0
 
-            pb.print_both_boards(tab, player_view(bot))
+            if wt == 0 and wb == 0:
+                pb.print_both_boards(tab, player_view(bot))
 
         if not running:
             running = True
             continue
     
         if wt == 1:
+            print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+            pb.print_both_boards(tab, bot)
             print("Komputer wygrał w", i, "salwach!\n")
     
         if wb == 1:
-            print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
+            print("Wygrałeś w ", i, "salwach!\n\nGratulacje!\n")
         
         a = ''
         while a != 'esc' and a != 'reset':
