@@ -370,7 +370,10 @@ if __name__ == '__main__':
             continue
     
         if wt == 1:
-            print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+            if bot_shoots >= 2:
+                print("Przeciwnik oddał salwę, trafiając twoje okręty " + str(bot_shoots) + " razy!\n")
+            else:
+                print("Przeciwnik oddał salwę, trafiając twój okręt!\n")
             pb.print_both_boards(tab, bot)
             print("Komputer wygrał w", i, "salwach!\n")
     
