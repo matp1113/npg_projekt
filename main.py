@@ -4,6 +4,7 @@ from enum import Enum
 from abc import ABC
 from itertools import zip_longest
 
+
 class Direction(Enum):
     NTH = 0
     EAST = 1
@@ -13,59 +14,65 @@ class Direction(Enum):
     def next(self):
         return Direction((self.value + 1) % 4)
 
+
 class Ship:
     def __init__(self, x, y, d, l):
-        self.location = (x,y)
-        self.direction = d                          #Inicjalizuje klase Statek(tu ship) ktora okresla podstawowe zasady tworzenia
-        self.length = l                             # nowych statków
-
+        self.location = (x, y)
+        self.direction = d  # Inicjalizuje klase Statek(tu ship) ktora okresla podstawowe zasady tworzenia
+        self.length = l  # nowych statków
 
     def coordinate_list(self):
         x, y = self.location
-        if self.location == Direction.NTH:
-            return ((x, y - i) for i in range(self.length))
-        if self.location == Direction.EAST:
-            return ((x + i, y) for i in range(self.length))             #Tworze liste, ktora przetrzymuje koordynaty statkow
-        if self.location == Direction.STH:                                  # ktore zostana pozniej dodane
-            return ((x, y + i) for i in range(self.length))
-        if self.location == Direction.WEST:
-            return ((x - i, y) for i in range(self.length))
+        if self.direction == Direction.NTH:
+            return [(x, y - i) for i in range(self.length)]
+        if self.direction == Direction.EAST:
+            return [(x + i, y) for i in range(self.length)]  # Tworze liste, ktora przetrzymuje koordynaty statkow
+        if self.direction == Direction.STH:  # ktore zostana pozniej dodane
+            return [(x, y + i) for i in range(self.length)]
+        if self.direction == Direction.WEST:
+            return [(x - i, y) for i in range(self.length)]
+
     def rotate(self):
-        self.direction = self.direction.next
+        self.direction = self.direction.next()
+
 
 class Board(ABC):
-    def __init__(self, size = 10, ship_sizes = [2,3,3,4,6]):
+    def __init__(self, size=10, ship_sizes=[2, 3, 3, 4, 6]):
         self.size = size
-        self.ship_sizes = ship_sizes                                #Inicjalizuje klase tablicy(tu Board) ktora okresla ogolne wlasciwosci statkow
+        self.ship_sizes = ship_sizes  # Inicjalizuje klase tablicy(tu Board) ktora okresla ogolne wlasciwosci statkow
         self.ships_list = []
         self.hits_list = []
         self.misses_list = []
+
     def is_valid(self, ship):
-        for x, y in ship.coordinate_list:                               #kolejne metody klasy to dodawanie i usuwanie statkow z calej gry
+        for x, y in ship.coordinate_list():  # kolejne metody klasy to dodawanie i usuwanie statkow z calej gry
             if x < 0 or y < 0 or x >= self.size or y >= self.size:
                 return False
         for otherShip in self.ships_list:
             if self.ships_overlap(ship, otherShip):
                 return False
         return True
+
     def add_ship(self, ship: Ship):
         if self.is_valid(ship):
             self.ships_list.append(ship)
             return True
         else:
             return False
+
     def remove_ship(self, ship):
         self.ships_list.remove(ship)
+
     def ships_overlap(self, ship1, ship2):
-        for ship1_coord in ship1.coordinate_list:
-            for ship2_coord in ship2.coordinate_list:
+        for ship1_coord in ship1.coordinate_list():
+            for ship2_coord in ship2.coordinate_list():
                 if ship1_coord == ship2_coord:
                     return True
         return False
 
     def get_ship(self, x, y):
         for ship in self.ships_list:
-            if (x, y) in ship.coordinate_list:
+            if (x, y) in ship.coordinate_list():
                 return ship
         return None
 
@@ -81,7 +88,7 @@ class Board(ABC):
         if not self.valid_target(x, y):
             return False
         for ship in self.ships_list:
-            for ship_coordinate in ship.coordinate_list:
+            for ship_coordinate in ship.coordinate_list():
                 if (x, y) == ship_coordinate:
                     return True
         self.misses_list.append((x, y))
@@ -91,7 +98,7 @@ class Board(ABC):
         grid = [[colours["water"] for _ in range(self.size)] for _ in range(self.size)]
         if include_ships:
             for ship in self.ships_list:
-                for x, y in ship.coordinate_list:
+                for x, y in ship.coordinate_list():
                     grid[y][x] = colours["ship"]
         for x, y in self.hits_list:
             grid[y][x] = colours["hit"]
@@ -101,12 +108,13 @@ class Board(ABC):
 
     def gameover(self):
         for ship in self.ships_list:
-            for coordinate in ship.coordinate_list:
+            for coordinate in ship.coordinate_list():
                 if coordinate not in self.hits_list:
                     return False
         return True
 
-class PlayerBoard(Board):                                           #Klasa tablicy gracza definiuje co gracz bedzie widzial u siebie na monitorze
+
+class PlayerBoard(Board):  # Klasa tablicy gracza definiuje co gracz bedzie widzial u siebie na monitorze
 
     def __init__(self, display, board_size, ship_sizes):
         super().__init__(board_size, ship_sizes)
@@ -116,9 +124,9 @@ class PlayerBoard(Board):                                           #Klasa tabli
         while True:
             self.display.show(None, self)
 
-            if self.ship_to_place:
+            if self.ship_to_place():
                 text = 'Click where you want your {}-long ship to be:'.format(
-                    self.ship_to_place)
+                    self.ship_to_place())
             else:
                 text = 'Click again to rotate a ship, or elsewhere if ready.'
             self.display.show_text(text, lower=True)
@@ -131,12 +139,12 @@ class PlayerBoard(Board):                                           #Klasa tabli
                     ship.rotate()
                     if self.is_valid(ship):
                         self.add_ship(ship)
-                elif self.ship_to_place:
-                    ship = Ship(x, y, direction, self.ship_to_place)
+                elif self.ship_to_place():
+                    ship = Ship(x, y, direction, self.ship_to_place())
                     if self.is_valid(ship):
                         self.add_ship(ship)
                     else:
-                        direction = direction.next
+                        direction = direction.next()
                 else:
                     break
 
@@ -153,7 +161,8 @@ class PlayerBoard(Board):                                           #Klasa tabli
                 return to_place
         return None
 
-class AIBoard(Board):                                       #Klasa tablicy AI
+
+class AIBoard(Board):  # Klasa tablicy AI
     def __init__(self, board_size, ship_sizes):
         super().__init__(board_size, ship_sizes)
         for ship_length in self.ship_sizes:
@@ -167,7 +176,8 @@ class AIBoard(Board):                                       #Klasa tablicy AI
                     self.add_ship(ship)
                     ship_added = True
 
-class Display:                                              # Klasa Display czyli frontend to co gracz widzi, spawn statkow wybuchy itp
+
+class Display:  # Klasa Display czyli frontend to co gracz widzi, spawn statkow wybuchy itp
     colours = {
         "water": pygame.color.Color("blue"),
         "ship": pygame.color.Color("gray"),
@@ -241,16 +251,18 @@ class Display:                                              # Klasa Display czyl
         if lower:
             self.screen.blit(label, (x, y_lo))
 
-    def flip(cls):
+    @staticmethod
+    def flip():
         pygame.display.flip()
         pygame.time.Clock().tick(60)
 
-    def close(cls):
+    @staticmethod
+    def close():
         pygame.display.quit()
         pygame.quit()
 
 
-class Game:                                                     #Trzewia gry
+class Game:  # Trzewia gry
 
     def __init__(self, display, size=10, ship_sizes=[6, 4, 3, 3, 2]):
         self.display = display
@@ -260,7 +272,7 @@ class Game:                                                     #Trzewia gry
 
     def play(self):
         print("Play starts")
-        while not self.gameover:
+        while not self.gameover():
             if self.player_shot():
                 self.ai_shot()
             self.display.show(self.ai_board, self.player_board)
@@ -282,12 +294,11 @@ class Game:                                                     #Trzewia gry
         else:
             return False
 
-
     def gameover(self):
-        if self.ai_board.gameover:
+        if self.ai_board.gameover():
             print("Congratulations you won")
             return True
-        elif self.player_board.gameover:
+        elif self.player_board.gameover():
             print("Congratulations you lost")
             return True
         else:
