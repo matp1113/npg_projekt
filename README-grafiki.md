@@ -9,3 +9,7 @@
 ![zatopiony_przod](https://user-images.githubusercontent.com/102683797/171597401-69aee476-8e35-4bbe-b92a-148b73857f23.png)
 ![zatopiony_srodek](https://user-images.githubusercontent.com/102683797/171597416-373a94c1-021a-4072-a199-7fba6e4e7ee8.png)
 ![zatopiony_tyl](https://user-images.githubusercontent.com/102683797/171597432-84a28197-929f-44ba-b68f-20c903299fc7.png)
+![rysunek_pod_interfejs](https://user-images.githubusercontent.com/102683797/173253746-703d4321-886d-43ec-a4a6-9a9908aa259c.png)
+![niezatopiony_pojedynczy](https://user-images.githubusercontent.com/102683797/173253749-f93ea881-4bcc-4782-9722-1df38a9a3bf0.png)
+![zatopiony_pojedynczy](https://user-images.githubusercontent.com/102683797/173253751-25ffbbf5-60dc-45ca-9e6d-44845a02f744.png)
+
