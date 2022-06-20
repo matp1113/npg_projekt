@@ -283,7 +283,11 @@ def wygrana(tab):
 def trytoshoot(tab, ekran, size):
     x, y = ekran.get_input()
     n_r = range(1, size + 1)
-    if x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
+    if x == None and y == 1:
+        print("tak")
+        return False, 1
+
+    elif x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
         a = shoot(tab, False, x, y)
         if a == 1:
             return True, 1
@@ -324,10 +328,13 @@ if __name__ == '__main__':
             print("Rozpoczynasz!\n")
         else:
             print("Przeciwnik rozpoczął!\n")
-            target = where_to_shoot(tab)
-            shoot(tab, True, target[1], target[0])
-            wt = wygrana(tab)
-            bot_shoots += 1
+            if wt == 0 and wb == 0:
+                target = where_to_shoot(tab)
+                while wt == 0 and shoot(tab, True, target[1], target[0]) == 1:
+                    wt = wygrana(tab)
+                    if wt == 0:
+                        target = where_to_shoot(tab)
+                bot_shoots += 1
 
 
 
@@ -371,6 +378,9 @@ if __name__ == '__main__':
                     ekran.close()
                     break
 
+            if not strike[0] and strike[1] == 1:
+                ekran.close()
+                break
 
 
 

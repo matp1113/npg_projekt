@@ -98,6 +98,15 @@ class Display:                                              # Klasa Display czyl
 
 
     def show(self, player_b, si_b):
+        offset = self.margin * 2 + self.board_size * self.cell_size + self.board_size
+
+        pygame.draw.rect(self.screen, "red",
+                         [offset + self.margin + (self.board_size - 2) * self.cell_size + (self.board_size - 2),
+                                       3 * self.margin + -1 * self.cell_size - 1 ,
+                          self.cell_size, self.cell_size])
+        font1 = pygame.font.SysFont("Helvetica", 2 * self.margin)
+        self.screen.blit(font1.render("X", True, "black"), (2 * self.cell_size * self.board_size + self.board_size, self.margin))
+
         if player_b is not None and si_b is not None:
             for y in range(self.board_size):
                 for x in range(self.board_size):
@@ -106,7 +115,6 @@ class Display:                                              # Klasa Display czyl
                                        3 * self.margin + y * self.cell_size + y,
                                       self.cell_size, self.cell_size])
 
-                    offset = self.margin * 2 + self.board_size * self.cell_size
                     pygame.draw.rect(self.screen, colours[player_b[y][x]] if player_b[y][x] in colours else "black",
                                      [ offset + self.margin + x * self.cell_size + x,
                                        3 * self.margin + y * self.cell_size + y,
@@ -115,13 +123,16 @@ class Display:                                              # Klasa Display czyl
 
 
     def get_input(self):
+        offset = self.margin * 2 + self.board_size * self.cell_size + self.board_size
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 Display.close()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                y = y
+                if (x - (offset + self.margin * 2 ))//(self.cell_size + 1) == 9 and (y - 3 * self.margin + 1) //self.cell_size == -1:
+                    print("tak")
+                    return None, 1
                 x = (x - self.margin) // (self.cell_size + 1)
                 y = (y - 3 * self.margin) // (self.cell_size + 1)
                 return x, y
@@ -133,9 +144,8 @@ class Display:                                              # Klasa Display czyl
 
     def show_text(self, text):
         self.hide_text()
-        x = self.margin
         label = self.font.render(text, True, colours["text"])
-        self.screen.blit(label, (x, self.margin))
+        self.screen.blit(label, (self.margin, self.margin))
 
     def hide_text(self):
         pygame.draw.rect(self.screen, "black",
@@ -156,11 +166,11 @@ class Display:                                              # Klasa Display czyl
 
     def adjust(self):
         w, h = pygame.display.get_surface().get_size()
-        wmargin = math.floor((w - self.board_size)/(3 + 4 * self.board_size))
+        wmargin = math.floor((w - 2 * self.board_size)/(3 + 4 * self.board_size))
         hmargin = math.floor((h - self.board_size)/(4 + 2 * self.board_size))
         self.margin = hmargin if (hmargin <= wmargin) else wmargin
         self.cell_size = 2 * self.margin
-        self.font = pygame.font.SysFont("Helvetica", self.margin)
+        self.font = pygame.font.SysFont("Helvetica", 2 * self.margin)
 
 
 def colour_grid(self, colours, include_ships=True):

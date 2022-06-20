@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="bugfix ale nadal są problemy z wyświetlaniem">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="naprawione problemy z wyświetlaniem">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Statki.py" beforeDir="false" afterPath="$PROJECT_DIR$/Statki.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/printboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/printboard.py" afterDir="false" />
@@ -176,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655754355076</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="naprawione problemy z wyświetlaniem">
+      <created>1655758461857</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1655758461857</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,6 +207,7 @@
     <MESSAGE value="grid" />
     <MESSAGE value="skalowanie z błędami" />
     <MESSAGE value="bugfix ale nadal są problemy z wyświetlaniem" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix ale nadal są problemy z wyświetlaniem" />
+    <MESSAGE value="naprawione problemy z wyświetlaniem" />
+    <option name="LAST_COMMIT_MESSAGE" value="naprawione problemy z wyświetlaniem" />
   </component>
 </project>
