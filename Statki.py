@@ -334,6 +334,7 @@ if __name__ == '__main__':
 
         while  end == 0:
             ekran.flip()
+            ekran.adjust()
 
             if wb == 0:
                 strike = trytoshoot(bot, ekran, pack[1])
@@ -344,7 +345,7 @@ if __name__ == '__main__':
                 i += 1
 
                 target = where_to_shoot(tab)
-                while wt == 0 and shoot(tab, True, target[1], target[0]) == 1:
+                while wt == 0 and wb == 0 and shoot(tab, True, target[1], target[0]) == 1:
                     wt = wygrana(tab)
                     if wt == 0:
                         target = where_to_shoot(tab)
