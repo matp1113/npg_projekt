@@ -2,6 +2,7 @@
 
 import os
 import pygame
+import math
 
 
 def clear_console():
@@ -80,16 +81,14 @@ colours = {
 class Display:                                              # Klasa Display czyli frontend to co gracz widzi, spawn statkow wybuchy itp
 
 
-    def __init__(self, board_size=10, cell_size=30, margin=15):
+    def __init__(self, board_size=10, margin=15):
         self.board_size = board_size
-        self.cell_size = cell_size
+        self.cell_size = 2 * margin
         self.margin = margin
 
         pygame.init()
         pygame.font.init()
         self.font = pygame.font.SysFont("Helvetica", self.margin)
-
-
 
         screen_width = 2 * self.cell_size * board_size + 3 * margin + self.board_size
         screen_height = self.cell_size * board_size + 4 * margin + self.board_size
@@ -119,12 +118,17 @@ class Display:                                              # Klasa Display czyl
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 Display.close()
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 y = y
                 x = (x - self.margin) // (self.cell_size + 1)
                 y = (y - 3 * self.margin) // (self.cell_size + 1)
                 return x, y
+
+            elif event.type == pygame.VIDEORESIZE:
+                self.adjust()
+
         return None, None
 
     def show_text(self, text):
@@ -139,10 +143,11 @@ class Display:                                              # Klasa Display czyl
                           0,
                           2 * self.cell_size * self.board_size + 3 * self.margin, 3 * self.margin])
 
-    @staticmethod
-    def flip():
+    def flip(self):
         pygame.display.flip()
         pygame.time.Clock().tick(60)
+
+
 
     @staticmethod
     def close():
@@ -151,8 +156,8 @@ class Display:                                              # Klasa Display czyl
 
     def adjust(self):
         w, h = pygame.display.get_surface().get_size()
-        wmargin = int ((w - self.board_size)/(3 + 4 * self.board_size))
-        hmargin = int ((h - self.board_size)/(4 + 2 * self.board_size))
+        wmargin = math.floor((w - self.board_size)/(3 + 4 * self.board_size))
+        hmargin = math.floor((h - self.board_size)/(4 + 2 * self.board_size))
         self.margin = hmargin if (hmargin <= wmargin) else wmargin
         self.cell_size = 2 * self.margin
         self.font = pygame.font.SysFont("Helvetica", self.margin)

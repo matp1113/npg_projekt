@@ -334,7 +334,6 @@ if __name__ == '__main__':
 
         while  end == 0:
             ekran.flip()
-            ekran.adjust()
             ekran.show_text("Wybierz pole do strzału")
 
             if wb == 0:
