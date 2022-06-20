@@ -329,12 +329,13 @@ if __name__ == '__main__':
             wt = wygrana(tab)
             bot_shoots += 1
 
-        ekran.show_text("Click to guess:")
+
 
 
         while  end == 0:
             ekran.flip()
             ekran.adjust()
+            ekran.show_text("Wybierz pole do strzału")
 
             if wb == 0:
                 strike = trytoshoot(bot, ekran, pack[1])

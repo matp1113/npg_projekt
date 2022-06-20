@@ -122,8 +122,8 @@ class Display:                                              # Klasa Display czyl
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 y = y
-                x = (x - self.margin) // (self.cell_size )
-                y = (y - 3 * self.margin) // (self.cell_size )
+                x = (x - self.margin) // (self.cell_size + 1)
+                y = (y - 3 * self.margin) // (self.cell_size + 1)
                 return x, y
         return None, None
 
