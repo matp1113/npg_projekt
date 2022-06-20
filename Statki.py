@@ -64,45 +64,7 @@ def wreck(x, y, tab, h):
 # sprawdza czy statek jest zatopiony
 
 
-def shoot(tab, ifbot=False):
-    alphabet = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12,
-                'm': 13, 'n': 14, 'o': 15, 'p': 16,
-                'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
-    y = 0
-    x = 0
-
-    if not ifbot:
-        size = len(tab) - 1
-        n_r = range(1, size)
-
-        while True:
-            data = input("Wpisz koordynaty strzalu (np. c6):\n")
-            if data == "esc":
-                global running
-                running = False
-                pb.clear_console()
-                return 0
-            try:
-                y = int(data[1:])
-                x = alphabet[data[0]]
-            except:
-                print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
-                continue
-            if x in n_r and y in n_r:
-                if tab[y][x] == 'x' or tab[y][x] == '░':
-                    print("W podane pole oddano już strzal! Sprobuj ponownie:")
-                    continue
-                else:
-                    break
-            else:
-                print("Koordynaty podane nieprawidlowo! Sprobuj ponownie:")
-                continue
-
-    elif ifbot:
-        target = where_to_shoot(tab)
-        x = target[1]
-        y = target[0]
-
+def shoot(tab, ifbot=False, x = 0, y = 0):
     global bot_shoots
 
     if tab[y][x] == '■':
@@ -318,12 +280,24 @@ def wygrana(tab):
     return 1
 
 
+def trytoshoot(tab, ekran, size):
+    x, y = ekran.get_input()
+    n_r = range(1, size + 1)
+    if x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
+        shoot(tab, False, x, y)
+        return True
+    else:
+        return False
+
 if __name__ == '__main__':
+
     ship = [4, 3, 2, 1]
     size = 10  # rozmiar
     pack = [ship, size]  # zrobione jak wskaznik by settings miało dostęp
     running = True
-    
+
+
+
     while running:
         tab = welcome(pack)
     
@@ -335,6 +309,11 @@ if __name__ == '__main__':
     
         i = 0  # liczebie strzałów
         bot_shoots = 0
+        ekran = pb.Display(pack[1] + 2)
+        wt = 0
+        wb = 0
+        end = 0
+        licznik = 0
 
         first_shoot = random.randint(0, 1)
         if first_shoot == 0:
@@ -342,35 +321,41 @@ if __name__ == '__main__':
             print("Rozpoczynasz!\n")
         else:
             print("Przeciwnik rozpoczął!\n")
+            target = where_to_shoot(tab)
+            shoot(tab, True, target[1], target[0])
+            wt = wygrana(tab)
+            bot_shoots += 1
 
 
-        wt = 0
-        wb = 0
 
-        while wt == 0 and wb == 0:  # chyba można by trochę zoptymalizować z wyskakiwaniem
 
-            if first_shoot != 1:
-                while wb == 0 and wt == 0 and shoot(bot) == 1:  # Gracz trafił
-                    wb = wygrana(bot)
-                    pb.print_both_boards(tab, player_view(bot))
+        while  end == 0:
+            ekran.flip()
 
-            if not running:
-                break
-    
-            while wb == 0 and wt == 0 and shoot(tab, True) == 1:  # Bot trafił
-                wt = wygrana(tab)
+            if wt == 0 and wb == 0 and trytoshoot(bot, ekran, size):
+                i += 1
+                target = where_to_shoot(tab)
+                shoot(tab, True, target[1], target[0])
                 bot_shoots += 1
+                wb = wygrana(bot)
+                wt = wygrana(tab)
 
-            i = i + 1
-            if first_shoot == 1:
-                first_shoot = 0
+            if wt == 0 and wb == 0:
+                ekran.show(tab, player_view(bot))
 
-            pb.print_both_boards(tab, player_view(bot))
 
-        if not running:
-            running = True
-            continue
-    
+            if wt != 0 or wb != 0:
+                ekran.show(tab, bot)
+                licznik += 1
+                if licznik > 100:
+                    end = 1
+                    ekran.close()
+
+
+
+
+
+
         if wt == 1:
             print("Komputer wygrał w", i, "salwach!\n")
     
