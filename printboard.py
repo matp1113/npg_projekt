@@ -89,8 +89,8 @@ class Display:                                              # Klasa Display czyl
         pygame.font.init()
         self.font = pygame.font.SysFont("Helvetica", 14)
 
-        screen_width = self.cell_size * board_size + 2 * margin
-        screen_height = 2 * self.cell_size * board_size + 3 * margin
+        screen_width = 2 * self.cell_size * board_size + 3 * margin
+        screen_height = self.cell_size * board_size + 4 * margin
         self.screen = pygame.display.set_mode(
             [screen_width, screen_height])
         pygame.display.set_caption("Battleships")
@@ -101,13 +101,13 @@ class Display:                                              # Klasa Display czyl
                 for x in range(self.board_size):
                     pygame.draw.rect(self.screen, colours[si_b[y][x]] if player_b[y][x] in colours else "black",
                                      [self.margin + x * self.cell_size,
-                                      self.margin + y * self.cell_size,
+                                      3 * self.margin + y * self.cell_size,
                                       self.cell_size, self.cell_size])
 
                     offset = self.margin * 2 + self.board_size * self.cell_size
                     pygame.draw.rect(self.screen, colours[player_b[y][x]] if player_b[y][x] in colours else "black",
-                                     [self.margin + x * self.cell_size,
-                                      offset + y * self.cell_size,
+                                     [offset + self.margin + x * self.cell_size,
+                                      3 * self.margin + y * self.cell_size,
                                       self.cell_size, self.cell_size])
 
 
@@ -120,19 +120,21 @@ class Display:                                              # Klasa Display czyl
                 x, y = pygame.mouse.get_pos()
                 y = y
                 x = (x - self.margin) // self.cell_size
-                y = (y - self.margin) // self.cell_size
+                y = (y - 3 * self.margin) // self.cell_size
                 return x, y
         return None, None
 
-    def show_text(self, text, upper=False, lower=False):
+    def show_text(self, text):
+        self.hide_text()
         x = self.margin
-        y_up = x
-        y_lo = self.board_size * self.cell_size + self.margin
-        label = self.font.render(text, True, Display.colours["text"])
-        if upper:
-            self.screen.blit(label, (x, y_up))
-        if lower:
-            self.screen.blit(label, (x, y_lo))
+        label = self.font.render(text, True, colours["text"])
+        self.screen.blit(label, (x, self.margin))
+
+    def hide_text(self):
+        pygame.draw.rect(self.screen, "black",
+                         [0,
+                          0,
+                          2 * self.cell_size * self.board_size + 3 * self.margin, 3 * self.margin])
 
     @staticmethod
     def flip():

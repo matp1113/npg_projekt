@@ -284,10 +284,13 @@ def trytoshoot(tab, ekran, size):
     x, y = ekran.get_input()
     n_r = range(1, size + 1)
     if x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
-        shoot(tab, False, x, y)
-        return True
+        a = shoot(tab, False, x, y)
+        if a == 1:
+            return True, 1
+        else:
+            return True, 0
     else:
-        return False
+        return False, 0
 
 if __name__ == '__main__':
 
@@ -310,8 +313,8 @@ if __name__ == '__main__':
         i = 0  # liczebie strzałów
         bot_shoots = 0
         ekran = pb.Display(pack[1] + 2)
-        wt = 0
-        wb = 0
+        wt = wygrana(tab)
+        wb = wygrana(bot)
         end = 0
         licznik = 0
 
@@ -326,16 +329,25 @@ if __name__ == '__main__':
             wt = wygrana(tab)
             bot_shoots += 1
 
-
+        ekran.show_text("Click to guess:")
 
 
         while  end == 0:
             ekran.flip()
 
-            if wt == 0 and wb == 0 and trytoshoot(bot, ekran, size):
+            if wb == 0:
+                strike = trytoshoot(bot, ekran, pack[1])
+            if wt == 0 and wb == 0 and strike[0]:
+                wb = wygrana(bot)
+                if wb == 0 and strike[1] == 1 :
+                    continue
                 i += 1
+
                 target = where_to_shoot(tab)
-                shoot(tab, True, target[1], target[0])
+                while wt == 0 and shoot(tab, True, target[1], target[0]) == 1:
+                    wt = wygrana(tab)
+                    if wt == 0:
+                        target = where_to_shoot(tab)
                 bot_shoots += 1
                 wb = wygrana(bot)
                 wt = wygrana(tab)
@@ -347,20 +359,23 @@ if __name__ == '__main__':
             if wt != 0 or wb != 0:
                 ekran.show(tab, bot)
                 licznik += 1
+                if wt == 1:
+                    ekran.show_text("Komputer wygrał w " + str(i) + " salwach!")
+
+                if wb == 1:
+                    ekran.show_text(str("Wygrałeś w " + str(i) + " salwach! Gratuluję!"))
+
                 if licznik > 100:
                     end = 1
                     ekran.close()
+                    break
 
 
 
 
 
 
-        if wt == 1:
-            print("Komputer wygrał w", i, "salwach!\n")
-    
-        if wb == 1:
-            print("Wygrałeś w ", i, "salwach!\n\nGratuluję!\n")
+
         
         a = ''
         while a != 'esc' and a != 'reset':
