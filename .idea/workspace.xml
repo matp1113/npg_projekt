@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="resetowanie ustawień po restarcie plus bugfix">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="wielostrzały plus wiadomośći">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Statki.py" beforeDir="false" afterPath="$PROJECT_DIR$/Statki.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/printboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/printboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650816046958</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="wielostrzały plus wiadomośći">
+      <created>1655749795628</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655749795628</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,6 +174,7 @@
     <MESSAGE value="kolejne pliki plus maksymalne ustawienia" />
     <MESSAGE value="bot strzela" />
     <MESSAGE value="własna plansza i lepsze wyświetlanie" />
-    <option name="LAST_COMMIT_MESSAGE" value="własna plansza i lepsze wyświetlanie" />
+    <MESSAGE value="wielostrzały plus wiadomośći" />
+    <option name="LAST_COMMIT_MESSAGE" value="wielostrzały plus wiadomośći" />
   </component>
 </project>

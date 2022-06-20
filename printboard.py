@@ -89,8 +89,8 @@ class Display:                                              # Klasa Display czyl
         pygame.font.init()
         self.font = pygame.font.SysFont("Helvetica", 14)
 
-        screen_width = 2 * self.cell_size * board_size + 3 * margin
-        screen_height = self.cell_size * board_size + 4 * margin
+        screen_width = 2 * self.cell_size * board_size + 3 * margin + self.board_size - 1
+        screen_height = self.cell_size * board_size + 4 * margin + self.board_size - 1
         self.screen = pygame.display.set_mode(
             [screen_width, screen_height])
         pygame.display.set_caption("Battleships")
@@ -100,14 +100,14 @@ class Display:                                              # Klasa Display czyl
             for y in range(self.board_size):
                 for x in range(self.board_size):
                     pygame.draw.rect(self.screen, colours[si_b[y][x]] if player_b[y][x] in colours else "black",
-                                     [self.margin + x * self.cell_size,
-                                      3 * self.margin + y * self.cell_size,
+                                     [self.margin + x * self.cell_size + x,
+                                      3 * self.margin + y * self.cell_size + y,
                                       self.cell_size, self.cell_size])
 
                     offset = self.margin * 2 + self.board_size * self.cell_size
                     pygame.draw.rect(self.screen, colours[player_b[y][x]] if player_b[y][x] in colours else "black",
-                                     [offset + self.margin + x * self.cell_size,
-                                      3 * self.margin + y * self.cell_size,
+                                     [offset + self.margin + x * self.cell_size + x,
+                                      3 * self.margin + y * self.cell_size + y,
                                       self.cell_size, self.cell_size])
 
 
@@ -119,8 +119,8 @@ class Display:                                              # Klasa Display czyl
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 y = y
-                x = (x - self.margin) // self.cell_size
-                y = (y - 3 * self.margin) // self.cell_size
+                x = (x - self.margin) // (self.cell_size + 1)
+                y = (y - 3 * self.margin) // (self.cell_size + 1)
                 return x, y
         return None, None
 
