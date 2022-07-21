@@ -5,7 +5,6 @@ import generateships as gs
 import settings
 
 
-# import os
 
 
 def clearConsole():
@@ -179,6 +178,97 @@ def player_view(oldtab):
 # wypisuje to co widzi gracz
 # generuje plansze gracza
 
+def welcomemenu(ekran, menu):
+    while True:
+        ekran.flip()
+        ekran.show_menu(menu)
+        num = ekran.menu_cord(menu)
+        if num != None:
+            ekran.clear()
+            break
+    return (num)
+
+def newwelcome(ekran, pack, menu =["Gra z losową planszą", "Gra z własną planszą", "Ustawienia", "Szybka Gra", "Zasady Gry"]):
+    num = welcomemenu(ekran, menu)
+    i = 0
+    tab = []
+
+    while True:
+        if num == 0:
+            i = 0
+            if False if False in [el == 0 for el in pack[0]] else True:
+                num = 2
+                i = -1
+                continue
+            tab = gs.rand(pack[1], pack[0])
+            while tab == 0:
+                tab = gs.rand(pack[1], pack[0])
+                i = i + 1
+                if i > 1000000:  # maks milion powtórzeń
+                    num = 2
+                    break
+            if tab != 0:
+                print("Wylosowana dla Ciebie plansza:\n") #TODO można to zrobić
+                pb.print_board(tab)
+                # input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
+                break
+
+        elif num == 1:
+            tab = gs.generate(pack[1], pack[0])
+            if tab == 1:
+                num = welcomemenu(ekran, menu)
+            else:
+                break
+
+        elif num == 2:
+            if i > 1000000:
+                print("Proszę o lepsze ustawienia!\n") #TODO tekst
+                i = 0
+            elif i == -1:
+                print("Proszę wybrać rozmiary statków!\n") #TODO tekst
+                i = 0
+            else:
+                pb.clear_console()
+            while settings.settings(pack) != 0:
+                pb.clear_console()
+            pb.clear_console()
+            num = settings.print_main_menu()
+
+        elif num == 3:
+            i = 0
+            pack[0] = [2, 2, 1]
+            pack[1] = 5
+            tab = gs.rand(pack[1], pack[0])
+            while tab == 0:
+                tab = gs.rand(pack[1], pack[0])
+                i = i + 1
+                if i > 1000000:  # maks milion powtórzeń
+                    print("Proszę o lepsze ustawienia!\n") #TODO tekst
+                    i = 0
+                    num = 2
+                    break
+            if tab != 0:
+                pb.clear_console()
+                print("Wylosowana dla Ciebie plansza:\n") #TODO można to zrobić
+                pb.print_board(tab)
+                #input("Wpisz dowolną wartość, aby rozopocząć grę.\n")
+                break
+
+        elif num == 4:
+            pb.clear_console()
+            data = ''
+            while data != 'esc':
+                data = settings.print_rules() #TODO zrób to
+            pb.clear_console()
+            num = settings.print_main_menu()
+
+        elif num == "esc": #TODO zrób to
+            exit(0)
+
+    return tab
+
+
+# witam
 
 def welcome(pack):
     num = settings.print_main_menu()
@@ -284,22 +374,17 @@ def trytoshoot(tab, ekran, size):
     x, y = ekran.get_box_cord()
     n_r = range(1, size + 1)
     if x == -1 and y == -1:
-        return False, 1 #jak klikniesz x
+        print("tak")
+        return None, None #jak klikniesz x
 
     elif x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
         a = shoot(tab, False, x, y)
         if a == 1:
-            return True, 1
+            return True, True #trafiony, nastepny strzał
         else:
-            return True, 0
+            return True, 0 #nietrafiony, bez nastepnego strzału
     else:
-        return False, 0
-
-def trypress(ekran, menu):
-    y = ekran.menu_cord(menu)
-    if y != None:
-        return y
-    return  None
+        return False, 0 #brak strzału
 
 if __name__ == '__main__':
 
@@ -310,13 +395,14 @@ if __name__ == '__main__':
 
 
     while running:
-        tab = welcome(pack)
+        ekran = pb.Display(pack[1] + 2)
+
+        tab = newwelcome(ekran, pack)
     
         bot = gs.rand(pack[1], pack[0])  # plansza dla bota w którą strzelamy
         while bot == 0:
             bot = gs.rand(pack[1], pack[0])
-    
-        pb.clear_console()
+
     
         player_shoots = 0  # liczebie strzałów
         bot_shoots = 0
@@ -340,25 +426,24 @@ if __name__ == '__main__':
                         target = where_to_shoot(tab)
                 bot_shoots += 1
 
-        ekran = pb.Display(pack[1] + 2)
 
-        while True:
-            ekran.flip()
-            ekran.show_menu(menu)
-            if trypress(ekran, menu) != None:
-                ekran.clear()
-                break
 
 
         while  end == 0:
             ekran.flip()
             ekran.show_text("Wybierz pole do strzału")
+            strike = [0, 0]
 
             if wb == 0:
                 strike = trytoshoot(bot, ekran, pack[1])
+
+                if strike[0] == None and strike[1] == None: #wcisniecie x
+                    ekran.clear()
+                    break
+
             if wt == 0 and wb == 0 and strike[0]:
                 wb = wygrana(bot)
-                if wb == 0 and strike[1] == 1 :
+                if wb == 0 and strike[1]:
                     continue
                 player_shoots += 1
 
@@ -367,7 +452,7 @@ if __name__ == '__main__':
                     wt = wygrana(tab)
                     if wt == 0:
                         target = where_to_shoot(tab)
-                bot_shoots += 1
+                    bot_shoots += 1
                 wb = wygrana(bot)
                 wt = wygrana(tab)
 
@@ -384,31 +469,24 @@ if __name__ == '__main__':
                 if wb == 1:
                     ekran.show_text(str("Wygrałeś w " + str(player_shoots) + " salwach! Gratuluję!"))
 
-                if licznik > 100:
+                if licznik > 200:
                     end = 1
-                    ekran.close()
+                    ekran.clear()
                     break
 
-            if not strike[0] and strike[1] == 1:
-                ekran.close()
-                break
 
 
 
-
-
-
-        
-        a = ''
-        while a != 'esc' and a != 'reset':
-            a = input("\n\nWpisz reset, aby zagrać od nowa.\nWpisz esc, aby zamknąć program.\n\n")
+        a = welcomemenu(ekran, ["Wyjście", "Reset"])
+        while a != 1 and a != 0:
+            a = welcomemenu(ekran, ["Wyjście", "Reset"])
             # nie wyłącza się od razu po końcu
-        if a == 'esc':
+        if a == 0:
             break
-        if a == 'reset':
+        if a == 1:
             pb.clear_console()
             pack[0] = [4, 3, 2, 1]
             pack[1] = 10
             continue
-
+    ekran.close()
     exit(0)

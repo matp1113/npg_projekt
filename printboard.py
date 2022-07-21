@@ -125,7 +125,7 @@ class Display:                                              # Klasa Display czyl
     def show_menu(self, menu, upp_text = "STATKI"):
         opt_amount = len(menu)
         w, h = pygame.display.get_surface().get_size()
-        dis = int((h - 4 *self.margin - opt_amount *(self.margin + self.cell_size))/2)
+        dis = int((h - 4 *self.margin)/(2*opt_amount + 1))
 
 
         menufont = pygame.font.SysFont("Helvetica", 2*self.margin)
@@ -137,11 +137,11 @@ class Display:                                              # Klasa Display czyl
         for x in range(opt_amount):
             pygame.draw.rect(self.screen, "white",
                              [int(w/5),
-                              4* self.margin +x * dis,
-                              int(w*3/5), self.cell_size + self.margin])
+                              4* self.margin +2 * x * dis,
+                              int(w*3/5), dis])
 
             label = menufont.render(menu[x], True, "black")
-            text_rect = label.get_rect(center=(w / 2, 4* self.margin +x * dis + int((self.cell_size + self.margin)/2)))
+            text_rect = label.get_rect(center=(w / 2, 4* self.margin +2 * x * dis + int((dis)/2)))
             self.screen.blit(label, text_rect)
 
 
@@ -178,6 +178,7 @@ class Display:                                              # Klasa Display czyl
         y = (y - 3 * self.margin) // (self.cell_size + 1)
 
         return x, y
+
     def menu_cord(self, menu):
         opt_amount = len(menu)
         x, y = self.get_input()
@@ -185,10 +186,13 @@ class Display:                                              # Klasa Display czyl
             return None
 
         w, h = pygame.display.get_surface().get_size()
-        dis = int((h - 4 * self.margin - opt_amount * (self.margin + self.cell_size)) / 2)
+        dis = int((h - 4 *self.margin)/(2*opt_amount + 1))
         if x > w/5 and x < 4/5 * w:
-            y = (y - 4* self.margin) // (dis + self.cell_size + self.margin)
-        return y if y in range(opt_amount) else None
+            y = (y - 4* self.margin) // (dis)
+            if y % 2 == 0:
+                return y / 2 if  y / 2 in range(opt_amount) else None
+        return None
+
 
     def show_text(self, text):
         self.hide_text()

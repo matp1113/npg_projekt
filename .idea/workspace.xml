@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="przycisk do opuszczenia gry &quot;esc&quot; w czasie gry">
+    <list default="true" id="0aeba3eb-ed33-4b67-9d5a-cceb94942b0d" name="Changes" comment="poprawa przycisku i wygląd menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Statki.py" beforeDir="false" afterPath="$PROJECT_DIR$/Statki.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/printboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/printboard.py" afterDir="false" />
@@ -190,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655763283376</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="poprawa przycisku i wygląd menu">
+      <created>1658401567547</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1658401567547</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,6 +223,7 @@
     <MESSAGE value="bugfix ale nadal są problemy z wyświetlaniem" />
     <MESSAGE value="naprawione problemy z wyświetlaniem" />
     <MESSAGE value="przycisk do opuszczenia gry esc w czasie gry" />
-    <option name="LAST_COMMIT_MESSAGE" value="przycisk do opuszczenia gry esc w czasie gry" />
+    <MESSAGE value="poprawa przycisku i wygląd menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="poprawa przycisku i wygląd menu" />
   </component>
 </project>
