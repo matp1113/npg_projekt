@@ -453,6 +453,7 @@ if __name__ == '__main__':
                     if wt == 0:
                         target = where_to_shoot(tab)
                     bot_shoots += 1
+                bot_shoots += 1
                 wb = wygrana(bot)
                 wt = wygrana(tab)
 

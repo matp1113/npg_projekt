@@ -98,6 +98,9 @@ class Display:                                              # Klasa Display czyl
 
 
     def show(self, player_b, si_b):
+        dict = {-1: '', 0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F', 6: 'G', 7: 'H', 8: 'I', 9: 'J', 10: 'K',
+                11: 'L',12: 'M', 13: 'N', 14: 'O', 15: 'P', 16: 'Q', 17: 'R', 18: 'S', 19: 'T', 20: 'U', 21: 'V', 22: 'W',
+                23: 'X', 24: 'Y', 25: 'Z'}
         offset = self.margin * 2 + self.board_size * self.cell_size + self.board_size
 
         pygame.draw.rect(self.screen, "red",
@@ -108,6 +111,8 @@ class Display:                                              # Klasa Display czyl
         label = font1.render("x", True, "black")
         text_rect = label.get_rect(center=(offset + self.margin + (self.board_size - 2) * self.cell_size + (self.board_size - 2) +int(self.cell_size / 2), 3 * self.margin + -1 * self.cell_size - 1 + int(self.cell_size / 2)))
         self.screen.blit(label, text_rect)
+
+
 
         if player_b is not None and si_b is not None:
             for y in range(self.board_size):
@@ -121,6 +126,17 @@ class Display:                                              # Klasa Display czyl
                                      [ offset + self.margin + x * self.cell_size + x,
                                        3 * self.margin + y * self.cell_size + y,
                                       self.cell_size, self.cell_size])
+        for x in range (1, self.board_size - 1):
+            labela = self.font.render(dict[x - 1], True, colours["text"])
+            label1 = self.font.render(str(x), True, colours["text"])
+            text_rect = labela.get_rect(center=(self.margin + (x+1/2) * (self.cell_size + 1) ,  3 * self.margin + 1/2 * (self.cell_size  + 1 )))
+            text_rect2 = labela.get_rect(center=(offset + self.margin + (x+1/2) * (self.cell_size + 1) ,  3 * self.margin + 1/2 * (self.cell_size  + 1 )))
+            text_rect3 = label1.get_rect(center=(self.margin + (1 / 2) * (self.cell_size + 1), 3 * self.margin + (1 / 2 + x) * (self.cell_size  + 1)))
+            text_rect4 = label1.get_rect(center=(offset + self.margin + ( 1 / 2) * (self.cell_size + 1),3 * self.margin + (1 / 2 + x) * (self.cell_size  + 1 )))
+            self.screen.blit(labela, text_rect)
+            self.screen.blit(labela, text_rect2)
+            self.screen.blit(label1, text_rect3)
+            self.screen.blit(label1, text_rect4)
 
     def show_menu(self, menu, upp_text = "STATKI"):
         opt_amount = len(menu)
