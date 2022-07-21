@@ -105,7 +105,9 @@ class Display:                                              # Klasa Display czyl
                                        3 * self.margin + -1 * self.cell_size - 1 ,
                           self.cell_size, self.cell_size])
         font1 = pygame.font.SysFont("Helvetica", 2 * self.margin)
-        self.screen.blit(font1.render("X", True, "black"), (2 * self.cell_size * self.board_size + self.board_size, self.margin))
+        label = font1.render("x", True, "black")
+        text_rect = label.get_rect(center=(offset + self.margin + (self.board_size - 2) * self.cell_size + (self.board_size - 2) +int(self.cell_size / 2), 3 * self.margin + -1 * self.cell_size - 1 + int(self.cell_size / 2)))
+        self.screen.blit(label, text_rect)
 
         if player_b is not None and si_b is not None:
             for y in range(self.board_size):
@@ -120,27 +122,73 @@ class Display:                                              # Klasa Display czyl
                                        3 * self.margin + y * self.cell_size + y,
                                       self.cell_size, self.cell_size])
 
+    def show_menu(self, menu, upp_text = "STATKI"):
+        opt_amount = len(menu)
+        w, h = pygame.display.get_surface().get_size()
+        dis = int((h - 4 *self.margin - opt_amount *(self.margin + self.cell_size))/2)
+
+
+        menufont = pygame.font.SysFont("Helvetica", 2*self.margin)
+        label = menufont.render(upp_text, True, colours["text"])
+        text_rect = label.get_rect(center=(w/2, 2 * self.margin))
+        self.screen.blit(label, text_rect)
+
+
+        for x in range(opt_amount):
+            pygame.draw.rect(self.screen, "white",
+                             [int(w/5),
+                              4* self.margin +x * dis,
+                              int(w*3/5), self.cell_size + self.margin])
+
+            label = menufont.render(menu[x], True, "black")
+            text_rect = label.get_rect(center=(w / 2, 4* self.margin +x * dis + int((self.cell_size + self.margin)/2)))
+            self.screen.blit(label, text_rect)
 
 
     def get_input(self):
-        offset = self.margin * 2 + self.board_size * self.cell_size + self.board_size
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 Display.close()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
-                if (x - (offset + self.margin * 2 ))//(self.cell_size + 1) == 9 and (y - 3 * self.margin + 1) //self.cell_size == -1:
-                    print("tak")
-                    return None, 1
-                x = (x - self.margin) // (self.cell_size + 1)
-                y = (y - 3 * self.margin) // (self.cell_size + 1)
                 return x, y
 
             elif event.type == pygame.VIDEORESIZE:
                 self.adjust()
 
         return None, None
+
+    def exit(self, x, y):
+
+        offset = self.margin * 2 + self.board_size * self.cell_size + self.board_size
+        if (x - (offset + self.margin * 2)) // (self.cell_size + 1) == (self.board_size - 2) and (y - 3 * self.margin + 1) // (self.cell_size + 1) == -1:
+            return True
+        return False
+
+    def get_box_cord(self):
+        x, y = self.get_input()
+        if x == None or y == None:
+            return None, None
+
+        if self.exit(x, y) == True:
+            return -1, -1
+
+        x = (x - self.margin) // (self.cell_size + 1)
+        y = (y - 3 * self.margin) // (self.cell_size + 1)
+
+        return x, y
+    def menu_cord(self, menu):
+        opt_amount = len(menu)
+        x, y = self.get_input()
+        if x == None or y == None:
+            return None
+
+        w, h = pygame.display.get_surface().get_size()
+        dis = int((h - 4 * self.margin - opt_amount * (self.margin + self.cell_size)) / 2)
+        if x > w/5 and x < 4/5 * w:
+            y = (y - 4* self.margin) // (dis + self.cell_size + self.margin)
+        return y if y in range(opt_amount) else None
 
     def show_text(self, text):
         self.hide_text()
@@ -172,6 +220,13 @@ class Display:                                              # Klasa Display czyl
         self.cell_size = 2 * self.margin
         self.font = pygame.font.SysFont("Helvetica", 2 * self.margin)
 
+    def clear(self):
+        w, h = pygame.display.get_surface().get_size()
+        pygame.draw.rect(self.screen, "black",
+                         [0,
+                          0,
+                          w, h])
+
 
 def colour_grid(self, colours, include_ships=True):
     grid = [[colours["water"] for _ in range(self.size)] for _ in range(self.size)]
@@ -184,3 +239,5 @@ def colour_grid(self, colours, include_ships=True):
     for x, y in self.misses_list:
         grid[y][x] = colours["miss"]
     return grid
+
+

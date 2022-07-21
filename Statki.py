@@ -205,7 +205,7 @@ def welcome(pack):
                 pb.clear_console()
                 print("Wylosowana dla Ciebie plansza:\n")
                 pb.print_board(tab)
-                input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
+                #input("\nWpisz dowolną wartość, aby rozopocząć grę.\n")
                 break
     
         elif num == "2":
@@ -281,11 +281,10 @@ def wygrana(tab):
 
 
 def trytoshoot(tab, ekran, size):
-    x, y = ekran.get_input()
+    x, y = ekran.get_box_cord()
     n_r = range(1, size + 1)
-    if x == None and y == 1:
-        print("tak")
-        return False, 1
+    if x == -1 and y == -1:
+        return False, 1 #jak klikniesz x
 
     elif x in n_r and y in n_r and tab[y][x] != 'x' and tab[y][x] != '░':
         a = shoot(tab, False, x, y)
@@ -296,12 +295,17 @@ def trytoshoot(tab, ekran, size):
     else:
         return False, 0
 
+def trypress(ekran, menu):
+    y = ekran.menu_cord(menu)
+    if y != None:
+        return y
+    return  None
+
 if __name__ == '__main__':
 
-    ship = [4, 3, 2, 1]
-    size = 10  # rozmiar
-    pack = [ship, size]  # zrobione jak wskaznik by settings miało dostęp
+    pack = [[4, 3, 2, 1], 10]  # podstawowe ustawienia
     running = True
+    menu = ["Gra z losową planszą", "Gra z własną planszą", "Ustawienia", "Szybka Gra", "Zasady Gry"]
 
 
 
@@ -314,7 +318,7 @@ if __name__ == '__main__':
     
         pb.clear_console()
     
-        i = 0  # liczebie strzałów
+        player_shoots = 0  # liczebie strzałów
         bot_shoots = 0
         ekran = pb.Display(pack[1] + 2)
         wt = wygrana(tab)
@@ -336,7 +340,14 @@ if __name__ == '__main__':
                         target = where_to_shoot(tab)
                 bot_shoots += 1
 
+        ekran = pb.Display(pack[1] + 2)
 
+        while True:
+            ekran.flip()
+            ekran.show_menu(menu)
+            if trypress(ekran, menu) != None:
+                ekran.clear()
+                break
 
 
         while  end == 0:
@@ -349,7 +360,7 @@ if __name__ == '__main__':
                 wb = wygrana(bot)
                 if wb == 0 and strike[1] == 1 :
                     continue
-                i += 1
+                player_shoots += 1
 
                 target = where_to_shoot(tab)
                 while wt == 0 and wb == 0 and shoot(tab, True, target[1], target[0]) == 1:
@@ -368,10 +379,10 @@ if __name__ == '__main__':
                 ekran.show(tab, bot)
                 licznik += 1
                 if wt == 1:
-                    ekran.show_text("Komputer wygrał w " + str(i) + " salwach!")
+                    ekran.show_text("Komputer wygrał w " + str(bot_shoots) + " salwach!")
 
                 if wb == 1:
-                    ekran.show_text(str("Wygrałeś w " + str(i) + " salwach! Gratuluję!"))
+                    ekran.show_text(str("Wygrałeś w " + str(player_shoots) + " salwach! Gratuluję!"))
 
                 if licznik > 100:
                     end = 1
